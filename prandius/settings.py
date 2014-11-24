@@ -87,9 +87,9 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_URL = '/app/'
+STATIC_URL = '/'
 STATIC_ROOT = 'staticfiles'
-STATICFILES_DIRS = ['staticfrontend']
+STATICFILES_DIRS = ['client/app']
 
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/

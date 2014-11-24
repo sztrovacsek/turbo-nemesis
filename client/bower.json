@@ -1,0 +1,14 @@
+{
+  "name": "prandius-client",
+  "description": "Prandius client code",
+  "version": "0.1.0",
+  "homepage": "https://github.com/sztrovacsek/turbo-nemesis",
+  "private": true,
+  "dependencies": {
+    "angular": "1.2.x",
+    "angular-route": "1.2.x",
+    "angular-loader": "1.2.x",
+    "angular-mocks": "~1.2.x",
+    "html5-boilerplate": "~4.3.0"
+  }
+}

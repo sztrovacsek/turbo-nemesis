@@ -48,6 +48,8 @@ def api_backend_login(request):
         user = authenticate(username=fbUid, password='dummy')
         if user is not None:
             login(request, user)
+            '''
+            # TODO: fix this
             fbData = data["fbData"]
             fb_user = FacebookUser.objects.create(
                 user_id=user.pk,
@@ -59,6 +61,7 @@ def api_backend_login(request):
             fb_user.save()
             user.email = fb_user.email
             user.save()
+            '''
         
     reply = {"reply": "OK", "user": user.username}
     return HttpResponse(

@@ -30,7 +30,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form">
-            <button type="submit" class="btn btn-success" id="id_login">Sign in with facebook</button>
+            <button class="btn btn-success" id="id_login">Sign in with facebook</button>
           </form>
         </div>
       </div>      
@@ -56,6 +56,7 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="bower_components/jquery/jquery.js"></script>
+  <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="app.js"></script>
@@ -77,17 +78,33 @@
       if (response.status === 'connected') {
         // Logged into your app and Facebook.
         $('#id_login').hide();
-        testAPI();
+        fbLoginConfirmed(response);
       } else if (response.status === 'not_authorized') {
         // The person is logged into Facebook, but not your app.
-        document.getElementById('status').innerHTML = 'Please log ' +
+        $('#status').innerHTML = 'Please log ' +
           'into this app.';
       } else {
         // The person is not logged into Facebook, so we're not sure if
         // they are logged into this app or not.
-        document.getElementById('status').innerHTML = 'Please log ' +
+        $('#status').innerHTML = 'Please log ' +
           'into Facebook.';
       }
+    }
+
+    // Here we run a very simple test of the Graph API after login is
+    // successful.  See statusChangeCallback() for when this call is made.
+    function fbLoginConfirmed(response) {
+      //
+      console.log('Welcome!  Fetching your information.... ');
+      FB.api('/me', function(response) {
+        console.log('Successful login for: ' + response.name);
+        $('#status').innerHTML =
+          'Thanks for logging in, ' + response.name + '!';
+      });
+      // log in to the backend
+      var uid = response.authResponse.userID;
+      var accessToken = response.authResponse.accessToken;
+      loginBackend(uid);
     }
 
     // This function is called when someone finishes with the Login
@@ -133,18 +150,25 @@
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
 
-    // Here we run a very simple test of the Graph API after login is
-    // successful.  See statusChangeCallback() for when this call is made.
-    function testAPI() {
-      console.log('Welcome!  Fetching your information.... ');
-      FB.api('/me', function(response) {
-        console.log('Successful login for: ' + response.name);
-        document.getElementById('status').innerHTML =
-          'Thanks for logging in, ' + response.name + '!';
+    // non-fb logic
+
+    // login to the backend
+    function loginBackend(uid){
+      var csrf = $.cookie('csrftoken');
+      console.log(csrf);
+      $.ajax({
+        url: "/api/backend_login/",
+        headers: {'X-CSRFToken': $.cookie('csrftoken')},
+        data: {"fbUid": uid},
+        type: "POST",
+        dataType: "JSON",
+        success: function(json){
+          console.log("Post succeeded");
+        }
       });
     }
 
-    // onclick handler
+    // onclick handlers
     $('#id_login').click(function(){
       FB.login(
         function(response){
@@ -153,7 +177,9 @@
         {scope: 'public_profile,email'}
       );
     });
-
+    $('#id_test').click(function(){
+      loginBackend("uid1234");
+    });
 
 
   });

@@ -14,6 +14,8 @@ urlpatterns = patterns('',
 
     url(r'^api/backend_login/$', api_backend_login),
     url(r'^api/test/$', api_test),
+    url(r'^sign_s3/$', api_sign_s3, name='sign-s3'),
+    url(r'^api/photo_add/$', api_photo_add, name='api-photo-add'),
 
     url(r'^$', RedirectView.as_view(url='/index.html', permanent=False), name='index-view'),
 

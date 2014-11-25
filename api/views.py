@@ -77,3 +77,67 @@ def api_test(request):
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
         content_type='application/json'
     )
+
+
+@login_required
+def api_sign_s3(request):
+    if not request.is_ajax():
+        return HttpResponse()
+
+    print("Signing aws request")
+    # Load necessary information into the application:
+    AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')
+    AWS_SECRET_KEY = os.environ.get('AWS_SECRET_KEY')
+    S3_BUCKET = os.environ.get('S3_BUCKET')
+
+    # Collect information on the file from the GET parameters of the request:
+    mime_type = request.GET['s3_object_type']
+    
+    # Come up with a filename
+    object_name = 'wine_photo_{0}-{1}.jpg'.format(request.user, int(time.time()))
+
+    # Set the expiry time of the signature (in seconds) and declare the permissions of the file to be uploaded
+    expires = int(time.time()+10)
+    amz_headers = "x-amz-acl:public-read"
+ 
+    # Generate the PUT request that JavaScript will use:
+    put_request = "PUT\n\n%s\n%d\n%s\n/%s/%s" % (mime_type, expires, amz_headers, S3_BUCKET, object_name)
+     
+    # Generate the signature with which the request can be signed:
+    signature = base64.encodestring(hmac.new(AWS_SECRET_KEY.encode(), put_request.encode(), sha1).digest())
+    # Remove surrounding whitespace and quote special characters:
+    signature = urllib.parse.quote_plus(signature.strip())
+    print("After composing signature: {0}".format(signature))
+
+    # Build the URL of the file in anticipation of its imminent upload:
+    url = 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, object_name)
+    print("After composing url: {0}".format(url))
+
+    content = json.dumps({
+        'signed_request': '%s?AWSAccessKeyId=%s&Expires=%d&Signature=%s' % (url, AWS_ACCESS_KEY, expires, signature),
+        'url': url
+    })
+    print("After composing content: {0}".format(content))
+    
+    # Return the signed request and the anticipated URL back to the browser in JSON format:
+    return HttpResponse(
+        content,
+        content_type='application/json'
+    )
+
+
+@login_required
+def api_photo_add(request):
+    if not request.is_ajax():
+        return HttpResponse()
+
+    print("Request (add photo) received: {0}".format(request.POST));
+    data = {} 
+    data['photo_url'] = request.POST['photo_url']
+    phood = FoodPhoto(photo_url=data['photo_url'])
+    phood.save()
+    print("Photo saved: {0}".format(photo.photo_url));
+    
+    return redirect(reverse('index-view'))
+
+

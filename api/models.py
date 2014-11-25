@@ -12,3 +12,10 @@ class FacebookUser(models.Model):
     def __str__(self):
         return self.fb_name
 
+
+class FoodPhoto(models.Model):
+    photo_url = models.CharField(max_length=300)
+    
+    def __str__(self):
+        return self.photo_url
+

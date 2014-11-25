@@ -94,17 +94,15 @@
     // Here we run a very simple test of the Graph API after login is
     // successful.  See statusChangeCallback() for when this call is made.
     function fbLoginConfirmed(response) {
-      //
+      var uid = response.authResponse.userID;
+      var accessToken = response.authResponse.accessToken;
       console.log('Welcome!  Fetching your information.... ');
       FB.api('/me', function(response) {
         console.log('Successful login for: ' + response.name);
         $('#status').innerHTML =
           'Thanks for logging in, ' + response.name + '!';
+          loginBackend(uid, response);
       });
-      // log in to the backend
-      var uid = response.authResponse.userID;
-      var accessToken = response.authResponse.accessToken;
-      loginBackend(uid);
     }
 
     // This function is called when someone finishes with the Login
@@ -153,13 +151,13 @@
     // non-fb logic
 
     // login to the backend
-    function loginBackend(uid){
+    function loginBackend(uid, fbData){
       var csrf = $.cookie('csrftoken');
       console.log(csrf);
       $.ajax({
         url: "/api/backend_login/",
         headers: {'X-CSRFToken': $.cookie('csrftoken')},
-        data: {"fbUid": uid},
+        data: {"fbUid": uid, "fbData": fbData},
         type: "POST",
         dataType: "JSON",
         success: function(json){

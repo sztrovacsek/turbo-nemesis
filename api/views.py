@@ -81,9 +81,6 @@ def api_test(request):
 
 @login_required
 def api_sign_s3(request):
-    if not request.is_ajax():
-        return HttpResponse()
-
     print("Signing aws request")
     # Load necessary information into the application:
     AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')

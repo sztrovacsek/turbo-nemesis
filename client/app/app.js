@@ -1,11 +1,10 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+var prandiusApp = angular.module('prandiusApp', [
   'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version'
+  'prandiusApp.view1',
+  'prandiusApp.view2',
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/view1'});

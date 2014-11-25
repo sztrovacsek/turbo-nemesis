@@ -38,8 +38,7 @@
   </div>
 
   <div class="jumbotron">
-    <!-- facebook integration playground, will be gone soon -->
-    <h1>Skeleton, still just a skeleton</h1>
+    <h3>Skeleton, still just a skeleton</h3>
     <div>
 
       <div id="status">
@@ -48,7 +47,7 @@
 
   </div>
 
-  <div class="container">
+  <div class="container" ng-app="prandiusApp">
     <div ng-view></div>
   </div>
 
@@ -62,9 +61,6 @@
   <script src="app.js"></script>
   <script src="view1/view1.js"></script>
   <script src="view2/view2.js"></script>
-  <script src="components/version/version.js"></script>
-  <script src="components/version/version-directive.js"></script>
-  <script src="components/version/interpolate-filter.js"></script>
   <script>
   $(document).ready(function(){
     // This is called with the results from from FB.getLoginStatus().

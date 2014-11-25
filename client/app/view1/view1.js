@@ -9,6 +9,8 @@ angular.module('prandiusApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', [function() {
-
-}]);
+.controller('View1Ctrl', ['$scope', '$http',
+  function($scope, $http) {
+    $scope.todo_text = "todo";
+  }
+]);

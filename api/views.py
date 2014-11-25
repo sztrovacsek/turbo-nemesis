@@ -91,7 +91,7 @@ def api_sign_s3(request):
     mime_type = request.GET['s3_object_type']
     
     # Come up with a filename
-    object_name = 'wine_photo_{0}-{1}.jpg'.format(request.user, int(time.time()))
+    object_name = '{0}-{1}.jpg'.format(request.user, int(time.time()))
 
     # Set the expiry time of the signature (in seconds) and declare the permissions of the file to be uploaded
     expires = int(time.time()+10)

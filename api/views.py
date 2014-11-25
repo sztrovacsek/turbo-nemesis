@@ -32,6 +32,7 @@ def api_backend_login(request):
         return HttpResponse()
 
     data = request.POST
+    print("Post data: {0}".format(data));
     fbUid = data["fbUid"]
     if fbUid:
         user = User.objects.filter(username=fbUid)

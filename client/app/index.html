@@ -94,7 +94,6 @@
   </script>
 
   <div class="container">
-    <!--
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -108,26 +107,17 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
+            <button type="submit" class="btn btn-success" id="id_login">Sign in with facebook</button>
           </form>
         </div>
       </div>      
     </nav>
-    -->
   </div>
 
   <div class="jumbotron">
     <!-- facebook integration playground, will be gone soon -->
     <h1>Skeleton, still just a skeleton</h1>
     <div>
-      <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-      </fb:login-button>
 
       <div id="status">
       </div> 
@@ -151,5 +141,20 @@
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
+  <script>
+  $(document).ready(function(){
+    // onclick handler
+    $('#id_login').click(function(){
+      FB.login(
+        function(response){
+          checkLoginState();
+        },
+        {scope: 'public_profile,email'}
+      );
+    });
+
+    // add other steps here
+  });
+  </script>
 </body>
 </html>

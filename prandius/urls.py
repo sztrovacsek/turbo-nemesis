@@ -18,6 +18,6 @@ urlpatterns = patterns('',
     url(r'^sign_s3/$', api_sign_s3, name='sign-s3'),
     url(r'^api/photo_add/$', api_photo_add, name='api-photo-add'),
 
-    url(r'x^$', RedirectView.as_view(url='/index.html', permanent=False), name='index-view'),
+    url(r'^x$', RedirectView.as_view(url='/index.html', permanent=False), name='index-view'),
 
 )

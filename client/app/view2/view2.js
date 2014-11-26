@@ -13,7 +13,7 @@ angular.module('prandiusApp.view2', ['ngRoute'])
   function($scope, $http) {
     $scope.savePhoto = function(){
       var photo_url = $('#avatar_url')[0].value;
-      console.log($photo_url);
+      console.log(photo_url);
       console.log($scope.photo_url);
       // post the data to the server
       $.ajax({

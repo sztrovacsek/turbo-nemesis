@@ -117,17 +117,15 @@ def api_sign_s3(request):
     signature = base64.encodestring(hmac.new(AWS_SECRET_KEY.encode(), put_request.encode(), sha1).digest())
     # Remove surrounding whitespace and quote special characters:
     signature = urllib.parse.quote_plus(signature.strip())
-    print("After composing signature: {0}".format(signature))
 
     # Build the URL of the file in anticipation of its imminent upload:
     url = 'https://%s.s3.amazonaws.com/%s' % (S3_BUCKET, object_name)
-    print("After composing url: {0}".format(url))
 
     content = json.dumps({
         'signed_request': '%s?AWSAccessKeyId=%s&Expires=%d&Signature=%s' % (url, AWS_ACCESS_KEY, expires, signature),
         'url': url
     })
-    print("After composing content: {0}".format(content))
+    print("Aws PUT request signed: {0}".format(content))
     
     # Return the signed request and the anticipated URL back to the browser in JSON format:
     return HttpResponse(
@@ -146,7 +144,7 @@ def api_photo_add(request):
     data['photo_url'] = request.POST['photo_url']
     phood = FoodPhoto(photo_url=data['photo_url'][0])
     phood.save()
-    print("Photo saved: {0}".format(photo.photo_url));
+    print("Photo saved: {0}".format(phood.photo_url));
     
     return redirect(reverse('index-view'))
 

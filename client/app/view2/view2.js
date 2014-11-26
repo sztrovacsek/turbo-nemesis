@@ -19,7 +19,7 @@ angular.module('prandiusApp.view2', ['ngRoute'])
       $.ajax({
         url: "/api/photo_add/",
         headers: {'X-CSRFToken': $.cookie('csrftoken')},
-        data: photo_url,
+        data: {"photo_url": photo_url},
         type: "POST",
         dataType: "JSON",
         success: function(json){

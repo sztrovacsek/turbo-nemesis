@@ -142,7 +142,7 @@ def api_photo_add(request):
     print("Request (add photo) received: {0}".format(request.POST));
     data = {} 
     data['photo_url'] = request.POST['photo_url']
-    phood = FoodPhoto(photo_url=data['photo_url'][0])
+    phood = FoodPhoto(photo_url=data['photo_url'])
     phood.save()
     print("Photo saved: {0}".format(phood.photo_url));
     

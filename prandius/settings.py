@@ -87,7 +87,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_URL = '/x/'
+STATIC_URL = '/'
 STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = ['client/app']
 

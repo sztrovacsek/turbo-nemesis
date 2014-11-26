@@ -11,6 +11,9 @@ angular.module('prandiusApp.view1', ['ngRoute'])
 
 .controller('View1Ctrl', ['$scope', '$http',
   function($scope, $http) {
+    $http.get('/api/user_data/').success(function(data) {
+      $scope.username = data["username"];
+    });
     $scope.todo_text = "todo";
   }
 ]);

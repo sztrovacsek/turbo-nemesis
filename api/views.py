@@ -80,6 +80,19 @@ def api_test(request):
 
 
 @login_required
+def api_user_data(request):
+    reply = {
+        "reply_to": "api_user_data",
+        "username": request.user.username,
+        "first_name": request.user.first_name,
+    }
+    return HttpResponse(
+        json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
+        content_type='application/json'
+    )
+
+
+@login_required
 def api_sign_s3(request):
     print("Signing aws request")
     # Load necessary information into the application:

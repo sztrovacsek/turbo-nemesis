@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('prandiusApp.view1', ['ngRoute'])
+angular.module('prandiusApp.main_feed', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
+  $routeProvider.when('/main_feed', {
+    templateUrl: 'main_feed/view1.html',
     controller: 'View1Ctrl'
   });
 }])

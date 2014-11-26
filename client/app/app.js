@@ -3,9 +3,9 @@
 // Declare app level module which depends on views, and components
 var prandiusApp = angular.module('prandiusApp', [
   'ngRoute',
-  'prandiusApp.view1',
-  'prandiusApp.view2',
+  'prandiusApp.main_feed',
+  'prandiusApp.add_photo',
 ]).
 config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
+  $routeProvider.otherwise({redirectTo: '/main_feed'});
 }]);

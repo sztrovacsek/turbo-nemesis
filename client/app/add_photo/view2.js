@@ -1,10 +1,10 @@
 'use strict';
 
-angular.module('prandiusApp.view2', ['ngRoute'])
+angular.module('prandiusApp.add_photo', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view2', {
-    templateUrl: 'view2/view2.html',
+  $routeProvider.when('/add_photo', {
+    templateUrl: 'add_photo/view2.html',
     controller: 'View2Ctrl'
   });
 }])

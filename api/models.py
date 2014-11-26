@@ -15,7 +15,20 @@ class FacebookUser(models.Model):
 
 class FoodPhoto(models.Model):
     photo_url = models.CharField(max_length=300)
+    user = models.ForeignKey(User, blank=True, null=True)
     
     def __str__(self):
         return self.photo_url
+
+
+class Post(models.Model):
+    user = models.ForeignKey(User)
+    foodphoto = models.ForeignKey(FoodPhoto)
+    last_update = models.DateTimeField('last updated', auto_now=True)
+    create_time = models.DateTimeField('created', auto_now_add=True)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return '{0}_{1}'.format(self.create_time, self.description)
+
 

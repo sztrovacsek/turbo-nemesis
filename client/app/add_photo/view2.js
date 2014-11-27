@@ -14,12 +14,13 @@ angular.module('prandiusApp.add_photo', ['ngRoute'])
     $scope.savePhoto = function(){
       var photo_url = $('#photo_url')[0].value;
       console.log(photo_url);
-      console.log($scope.photo_url);
+      var description = $('#description')[0].value;
+      console.log(description);
       // post the data to the server
       $.ajax({
         url: "/api/photo_add/",
         headers: {'X-CSRFToken': $.cookie('csrftoken')},
-        data: {"photo_url": photo_url},
+        data: {"photo_url": photo_url, "description": description},
         type: "POST",
         dataType: "JSON",
         success: function(json){

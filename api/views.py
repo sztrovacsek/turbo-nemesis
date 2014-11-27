@@ -144,7 +144,7 @@ def api_photo_add(request):
     photo = FoodPhoto(photo_url=photo_url)
     photo.save()
     print("Photo saved: {0}".format(photo.photo_url));
-    photo_url = request.POST.get('description', '')
+    description = request.POST.get('description', '')
     post = Post(user=request.user, foodphoto=photo, description=description)
     post.save()
     print("Post saved: {0}".format(post.description));
@@ -167,10 +167,10 @@ def api_latest_posts(request):
     }
     qs = Post.objects.all().order_by('create_time')
     reply["posts"] = [{
-        "create_data":post.create_date,
-        "description":post.description,
-        "photo_url":post.foodphoto.photo_url,
-        } for post in qs.reverse()[:10]]
+        "create_date": str(post.create_time),
+        "description": post.description,
+        "photo_url": post.foodphoto.photo_url,
+        } for post in qs.reverse()[:5]]
     reply["reply"] = "OK"
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),

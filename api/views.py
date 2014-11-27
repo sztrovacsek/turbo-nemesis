@@ -140,11 +140,11 @@ def api_photo_add(request):
         return HttpResponse()
 
     print("Request (add photo) received: {0}".format(request.POST));
-    photo_url = request.POST['photo_url']
+    photo_url = request.POST.get('photo_url', '')
     photo = FoodPhoto(photo_url=photo_url)
     photo.save()
     print("Photo saved: {0}".format(photo.photo_url));
-    photo_url = request.POST['description']
+    photo_url = request.POST.get('description', '')
     post = Post(user=request.user, foodphoto=photo, description=description)
     post.save()
     print("Post saved: {0}".format(post.description));

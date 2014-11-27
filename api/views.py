@@ -140,12 +140,42 @@ def api_photo_add(request):
         return HttpResponse()
 
     print("Request (add photo) received: {0}".format(request.POST));
-    data = {} 
-    data['photo_url'] = request.POST['photo_url']
-    phood = FoodPhoto(photo_url=data['photo_url'])
-    phood.save()
-    print("Photo saved: {0}".format(phood.photo_url));
-    
-    return redirect(reverse('index-view'))
+    photo_url = request.POST['photo_url']
+    photo = FoodPhoto(photo_url=photo_url)
+    photo.save()
+    print("Photo saved: {0}".format(photo.photo_url));
+    photo_url = request.POST['description']
+    post = Post(user=request.user, foodphoto=photo, description=description)
+    post.save()
+    print("Post saved: {0}".format(post.description));
+
+    reply = {
+        "reply_to": "api_photo_add",
+        "username": request.user.username,
+        "reply": "OK",
+    }
+    return HttpResponse(
+        json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
+        content_type='application/json'
+    )
+
+
+def api_latest_posts(request):
+    reply = {
+        "reply_to": "api_latest_posts",
+        "username": request.user.username,
+    }
+    qs = Post.objects.all().order_by('create_time')
+    reply["posts"] = [{
+        "create_data":post.create_date,
+        "description":post.description,
+        "photo_url":post.foodphoto.photo_url,
+        } for post in qs.reverse()[:10]]
+    reply["reply"] = "OK"
+    return HttpResponse(
+        json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
+        content_type='application/json'
+    )
+
 
 

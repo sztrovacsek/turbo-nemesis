@@ -11,6 +11,12 @@ angular.module('prandiusApp.add_photo', ['ngRoute'])
 
 .controller('View2Ctrl', ['$scope', '$http',
   function($scope, $http) {
+    $http.get('/api/user_login_status/').success(function(data) {
+      $scope.logged_in = data["logged_in"];
+    });
+    $http.get('/api/user_data/').success(function(data) {
+      $scope.username = data["username"];
+    });
     $scope.savePhoto = function(){
       var photo_url = $('#photo_url')[0].value;
       console.log(photo_url);

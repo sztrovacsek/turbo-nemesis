@@ -178,4 +178,15 @@ def api_latest_posts(request):
     )
 
 
+def api_user_login_status(request):
+    reply = {
+        "reply_to": "api_login_status",
+        "username": request.user.username,
+        "logged_in": request.user.is_authenticated(),
+    }
+    return HttpResponse(
+        json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
+        content_type='application/json'
+    )
+
 

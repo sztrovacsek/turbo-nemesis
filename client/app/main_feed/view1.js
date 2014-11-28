@@ -11,9 +11,6 @@ angular.module('prandiusApp.main_feed', ['ngRoute'])
 
 .controller('View1Ctrl', ['$scope', '$http',
   function($scope, $http) {
-    $http.get('/api/user_data/').success(function(data) {
-      $scope.username = data["username"];
-    });
     $http.get('/api/latest_posts/').success(function(data) {
       $scope.posts = data["posts"];
     });

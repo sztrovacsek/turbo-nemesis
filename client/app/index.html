@@ -13,6 +13,16 @@
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=308832312655014&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
@@ -26,7 +36,7 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <form class="navbar-form navbar-right" role="form">
-          <button class="btn btn-success" id="id_login">Sign in with facebook</button>
+          <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState();" scope="public_profile,email,user_friends"></div>
         </form>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="#main_feed">Main feed</a></li>
@@ -46,7 +56,7 @@
   <div class="container" ng-app="prandiusApp" ng-controller="IndexCtrl">
     <div class="row">
     <div class="col-md-12">
-      <div id="status"></div> 
+      <div id="status">Facebook stuff...</div> 
       <div ng-view></div>
     </div>
     </div>
@@ -66,6 +76,15 @@
   <script src="map_feed/view.js"></script>
   <script>
   $(document).ready(function(){
+    // This function is called when someone finishes with the Login
+    // Button.  See the onlogin handler attached to it in the sample
+    // code below.
+    function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
+
     // This is called with the results from from FB.getLoginStatus().
     function statusChangeCallback(response) {
       console.log('statusChangeCallback');
@@ -90,7 +109,6 @@
     // Here we run a very simple test of the Graph API after login is
     // successful.  See statusChangeCallback() for when this call is made.
     function fbLoginConfirmed(response) {
-      $('#id_login').hide();
       var uid = response.authResponse.userID;
       var accessToken = response.authResponse.accessToken;
       console.log('Welcome!  Fetching your information.... ');
@@ -101,51 +119,6 @@
           loginBackend(uid, response);
       });
     }
-
-    // This function is called when someone finishes with the Login
-    // Button.  See the onlogin handler attached to it in the sample
-    // code below.
-    function checkLoginState() {
-      FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-      });
-    }
-
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '308832312655014',
-        cookie     : true, 
-        xfbml      : true,
-        version    : 'v2.1'
-      });
-
-      // Now that we've initialized the JavaScript SDK, we call 
-      // FB.getLoginStatus().  This function gets the state of the
-      // person visiting this page and can return one of three states to
-      // the callback you provide.  They can be:
-      //
-      // 1. Logged into your app ('connected')
-      // 2. Logged into Facebook, but not your app ('not_authorized')
-      // 3. Not logged into Facebook and can't tell if they are logged into
-      //    your app or not.
-      //
-      // These three cases are handled in the callback function.
-
-      /*
-      FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-      });
-      */
-
-    };
-
-    (function(d, s, id){
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "//connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
 
     // non-fb logic
 
@@ -165,15 +138,6 @@
       });
     }
 
-    // onclick handlers
-    $('#id_login').click(function(){
-      FB.login(
-        function(response){
-          checkLoginState();
-        },
-        {scope: 'public_profile,email'}
-      );
-    });
     $('#id_test').click(function(){
       loginBackend("uid1234");
     });

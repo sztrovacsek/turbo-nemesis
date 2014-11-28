@@ -68,6 +68,22 @@
       });
     }
 
+    // login to the prandius backend
+    function loginBackend(uid, fbData){
+      var csrf = $.cookie('csrftoken');
+      console.log(csrf);
+      $.ajax({
+        url: "/api/backend_login/",
+        headers: {'X-CSRFToken': $.cookie('csrftoken')},
+        data: {"fbUid": uid, "fbData": fbData, "name": fbData.name},
+        type: "POST",
+        dataType: "JSON",
+        success: function(json){
+          console.log("Post succeeded");
+        }
+      });
+    }
+
 
 </script>
 
@@ -104,7 +120,7 @@
   <div class="container" ng-app="prandiusApp" ng-controller="IndexCtrl">
     <div class="row">
     <div class="col-md-12">
-      <div id="status">Facebook stuff...</div> 
+      <div id="status"></div> 
       <div ng-view></div>
     </div>
     </div>
@@ -124,24 +140,6 @@
   <script src="map_feed/view.js"></script>
   <script>
   $(document).ready(function(){
-    // non-fb logic
-
-    // login to the backend
-    function loginBackend(uid, fbData){
-      var csrf = $.cookie('csrftoken');
-      console.log(csrf);
-      $.ajax({
-        url: "/api/backend_login/",
-        headers: {'X-CSRFToken': $.cookie('csrftoken')},
-        data: {"fbUid": uid, "fbData": fbData},
-        type: "POST",
-        dataType: "JSON",
-        success: function(json){
-          console.log("Post succeeded");
-        }
-      });
-    }
-
     $('#id_test').click(function(){
       loginBackend("uid1234");
     });

@@ -184,9 +184,12 @@ def api_user_login_status(request):
     reply = {
         "reply_to": "api_login_status",
         "username": request.user.username,
-        "name": request.user.first_name,
         "logged_in": request.user.is_authenticated(),
     }
+    if request.user.is_authenticated:
+        reply["name"] = request.user.first_name
+    else:
+        reply["name"] = "Prandius Guest"
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
         content_type='application/json'

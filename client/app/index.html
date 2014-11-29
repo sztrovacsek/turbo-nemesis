@@ -46,11 +46,9 @@
         fbLoginConfirmed(response);
       } else if (response.status === 'not_authorized') {
         // The person is logged into Facebook, but not your app.
-        $('#status').innerHTML = 'Please log into this app.';
       } else {
         // The person is not logged into Facebook, so we're not sure if
         // they are logged into this app or not.
-        $('#status').innerHTML = 'Please log into Facebook.';
       }
     }
 
@@ -62,9 +60,7 @@
       console.log('Welcome!  Fetching your information.... ');
       FB.api('/me', function(response) {
         console.log('Successful login for: ' + response.name);
-        $('#status').innerHTML =
-          'Thanks for logging in, ' + response.name + '!';
-          loginBackend(uid, response);
+        loginBackend(uid, response);
       });
     }
 
@@ -79,7 +75,7 @@
         type: "POST",
         dataType: "JSON",
         success: function(json){
-          console.log("Post succeeded");
+          console.log("Backend login: post succeeded");
         }
       });
     }

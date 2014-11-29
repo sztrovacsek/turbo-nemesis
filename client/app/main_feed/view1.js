@@ -11,9 +11,9 @@ angular.module('prandiusApp.main_feed', ['ngRoute'])
 
 .controller('View1Ctrl', ['$scope', '$http',
   function($scope, $http) {
+    $scope.todo_text = "todo";
     $http.get('/api/latest_posts/').success(function(data) {
       $scope.posts = data["posts"];
     });
-    $scope.todo_text = "todo";
   }
 ]);

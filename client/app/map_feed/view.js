@@ -11,10 +11,6 @@ angular.module('prandiusApp.map_feed', ['ngRoute'])
 
 .controller('ViewCtrl', ['$scope', '$http',
   function($scope, $http) {
-    $http.get('/api/user_data/').success(function(data) {
-      $scope.username = data["username"];
-      $scope.name = data["name"];
-    });
     $scope.todo_text = "todo";
   }
 ]);

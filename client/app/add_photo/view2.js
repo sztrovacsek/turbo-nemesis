@@ -11,12 +11,11 @@ angular.module('prandiusApp.add_photo', ['ngRoute'])
 
 .controller('View2Ctrl', ['$scope', '$http',
   function($scope, $http) {
+    $scope.post_succeeded = false;
     $http.get('/api/user_login_status/').success(function(data) {
-      $scope.logged_in = data["logged_in"];
-    });
-    $http.get('/api/user_data/').success(function(data) {
-      $scope.username = data["username"];
+      $scope.username_i = data["username"];
       $scope.name = data["name"];
+      $scope.logged_in = data["logged_in"];
     });
     $scope.savePhoto = function(){
       var photo_url = $('#photo_url')[0].value;
@@ -32,6 +31,7 @@ angular.module('prandiusApp.add_photo', ['ngRoute'])
         dataType: "JSON",
         success: function(json){
           console.log("Post succeeded");
+          $scope.post_succeeded = true;
         }
       });
     }

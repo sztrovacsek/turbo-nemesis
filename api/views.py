@@ -159,7 +159,7 @@ def api_latest_posts(request):
         "create_date": str(post.create_time),
         "description": post.description,
         "photo_url": post.foodphoto.photo_url,
-        } for post in qs.reverse()[:5]]
+        } for post in qs.reverse()[:10]]
     reply["reply"] = "OK"
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),

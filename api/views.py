@@ -34,6 +34,7 @@ def api_backend_login(request):
     data = request.POST
     print("Post data: {0}".format(data));
     fbUid = data["fbUid"]
+    fbName = data["name"]
     if fbUid:
         user = User.objects.filter(username=fbUid)
         if user:
@@ -42,6 +43,7 @@ def api_backend_login(request):
             print("Create and log in user ({0})".format(fbUid));
             user = User.objects.create_user(
                 username=fbUid,
+                first_name = fbName,
                 password='dummy')
             user.save()
         # TODO: use our own auth backend
@@ -182,6 +184,7 @@ def api_user_login_status(request):
     reply = {
         "reply_to": "api_login_status",
         "username": request.user.username,
+        "name": request.user.first_name,
         "logged_in": request.user.is_authenticated(),
     }
     return HttpResponse(

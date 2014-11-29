@@ -16,6 +16,7 @@ var prandiusApp = angular.module('prandiusApp', [
   function($scope, $http) {
     $http.get('/api/user_login_status/').success(function(data) {
       $scope.username_i = data["username"];
+      $scope.name = data["name"];
       $scope.logged_in = data["logged_in"];
     });
   }

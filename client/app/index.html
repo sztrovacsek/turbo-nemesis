@@ -66,7 +66,6 @@
     // login to the prandius backend
     function loginBackend(uid, fbData){
       var csrf = $.cookie('csrftoken');
-      console.log(csrf);
       $.ajax({
         url: "/api/backend_login/",
         headers: {'X-CSRFToken': $.cookie('csrftoken')},

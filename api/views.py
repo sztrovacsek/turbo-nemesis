@@ -186,7 +186,7 @@ def api_user_login_status(request):
         "username": request.user.username,
         "logged_in": request.user.is_authenticated(),
     }
-    if request.user.is_authenticated:
+    if request.user.is_authenticated():
         reply["name"] = request.user.first_name
     else:
         reply["name"] = "Prandius Guest"

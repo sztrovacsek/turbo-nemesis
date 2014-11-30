@@ -159,6 +159,7 @@ def api_latest_posts(request):
         "create_date": str(post.create_time),
         "description": post.description,
         "photo_url": post.foodphoto.photo_url,
+        "user_name": post.user.first_name,
         } for post in qs.reverse()[:10]]
     reply["reply"] = "OK"
     return HttpResponse(

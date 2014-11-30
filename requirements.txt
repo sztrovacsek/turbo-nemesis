@@ -7,4 +7,5 @@ psycopg2==2.5.3
 requests==2.3.0
 static3==0.5.1
 whitenoise==1.0.4
-
+boto==2.34.0
+Pillow==2.6.1

@@ -15,6 +15,8 @@ class FacebookUser(models.Model):
 
 class FoodPhoto(models.Model):
     photo_url = models.CharField(max_length=300)
+    feed_thumbnail_url = models.CharField(
+        max_length=300, blank=True, null=True)
     user = models.ForeignKey(User, blank=True, null=True)
     
     def __str__(self):

@@ -59,8 +59,8 @@ def create_thumbnail(foodphoto, bucket, bucket_name):
     thumb_trunkname = 't_feed_{0}'.format(trunkname)
     print("ThumbTrunk name: {0}".format(thumb_trunkname))
     k2.key = thumb_trunkname
-    k2.set_acl('public-read') 
     k2.set_contents_from_filename(TMP_NEW)
+    k2.set_acl('public-read') 
     # save
     url = aws_bucket_prefix(bucket_name)+thumb_trunkname
     print("ThumbUrl name: {0}".format(url))

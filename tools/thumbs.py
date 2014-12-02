@@ -11,21 +11,14 @@ from PIL import Image
 from api.models import Post, FoodPhoto
 
 
-AWS_PREFIX = 'https://s3-eu-west-1.amazonaws.com/'
 TMP_ORIG = 'orig_tmp.jpg'
 TMP_NEW = 'thumbnail_feed_tmp.jpg'
 
 
 def aws_bucket_prefix(bucket_name):
-    s = AWS_PREFIX + bucket_name + '/' 
-    return s
+    return 'https://{0}.s3.amazonaws.com/'.format(bucket_name)
 
 
-def url_prefix_magic(bucket_name):
-    l = len(AWS_PREFIX) + len(bucket_name) + 1
-    return l
-
-    
 def connect_aws():
     AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')
     AWS_SECRET_KEY = os.environ.get('AWS_SECRET_KEY')
@@ -39,11 +32,12 @@ def connect_aws():
     return (conn, bucket, S3_BUCKET)
 
 
-def create_thumbnail(foodphoto, bucket, prefix_lengh, bucket_name):
+def create_thumbnail(foodphoto, bucket, bucket_name):
     # download orig
     k = Key(bucket)
     print("FoodPhoto url: {0}".format(foodphoto.photo_url))
-    trunkname = foodphoto.photo_url[prefix_lengh:] 
+    p = foodphoto.photo_url.rfind('/')
+    trunkname = foodphoto.photo_url[p+1:] 
     print("Trunk name: {0}".format(trunkname))
     k.key = trunkname
     s = k.get_contents_to_filename(TMP_ORIG)
@@ -80,14 +74,12 @@ def create_missing_thumbnails():
     print("Starting: creating missing thumbnails")
     (conn, bucket, bucket_name) = connect_aws();
     posts = Post.objects.all()
-    # warning: this magic only works if all files are in the same bucket
-    prefix_length = url_prefix_magic(bucket_name)
     for post in posts:
         foodphoto = post.foodphoto
         if not foodphoto.feed_thumbnail_url:
             print("Post needs thumbnail: {0}".format(
                 str(post)))
-            create_thumbnail(foodphoto, bucket, prefix_length, bucket_name) 
+            create_thumbnail(foodphoto, bucket, bucket_name) 
 
 
 if __name__ == "__main__":

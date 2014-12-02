@@ -135,3 +135,11 @@ LOGGING = {
     },
 }
 
+BROKER_URL = os.environ.get(
+    'CLOUDAMQP_URL',
+    'amqp://guest:guest@localhost:5672/'
+)
+CELERY_TASK_SERIALIZER='json'
+CELERY_ACCEPT_CONTENT=['json']
+CELERY_RESULT_SERIALIZER='json'
+BROKER_POOL_LIMIT=1

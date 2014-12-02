@@ -32,15 +32,15 @@ def api_backend_login(request):
         return HttpResponse()
 
     data = request.POST
-    print("Post data: {0}".format(data));
+    logger.debug("Post data: {0}".format(data));
     fbUid = data["fbUid"]
     fbName = data["name"]
     if fbUid:
         user = User.objects.filter(username=fbUid)
         if user:
-            print("Already logged in, wtf? ({0})".format(fbUid));
+            logger.debug("Already logged in, wtf? ({0})".format(fbUid));
         elif user is not None:
-            print("Create and log in user ({0})".format(fbUid));
+            logger.debug("Create and log in user ({0})".format(fbUid));
             user = User.objects.create_user(
                 username=fbUid,
                 first_name = fbName,
@@ -74,6 +74,7 @@ def api_backend_login(request):
 
 @login_required
 def api_test(request):
+    logger.debug("api_test called")
     reply = {"reply": "OK",}
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
@@ -83,7 +84,7 @@ def api_test(request):
 
 @login_required
 def api_sign_s3(request):
-    print("Signing aws request")
+    logger.debug("Signing aws request")
     # Load necessary information into the application:
     AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')
     AWS_SECRET_KEY = os.environ.get('AWS_SECRET_KEY')
@@ -114,7 +115,7 @@ def api_sign_s3(request):
         'signed_request': '%s?AWSAccessKeyId=%s&Expires=%d&Signature=%s' % (url, AWS_ACCESS_KEY, expires, signature),
         'url': url
     })
-    print("Aws PUT request signed: {0}".format(content))
+    logger.debug("Aws PUT request signed: {0}".format(content))
     
     # Return the signed request and the anticipated URL back to the browser in JSON format:
     return HttpResponse(
@@ -128,15 +129,15 @@ def api_photo_add(request):
     if not request.is_ajax():
         return HttpResponse()
 
-    print("Request (add photo) received: {0}".format(request.POST));
+    logger.debug("Request (add photo) received: {0}".format(request.POST));
     photo_url = request.POST.get('photo_url', '')
     photo = FoodPhoto(photo_url=photo_url)
     photo.save()
-    print("Photo saved: {0}".format(photo.photo_url));
+    logger.debug("Photo saved: {0}".format(photo.photo_url));
     description = request.POST.get('description', '')
     post = Post(user=request.user, foodphoto=photo, description=description)
     post.save()
-    print("Post saved: {0}".format(post.description));
+    logger.debug("Post saved: {0}".format(post.description));
 
     reply = {
         "reply_to": "api_photo_add",

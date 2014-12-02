@@ -18,6 +18,12 @@ class FoodPhoto(models.Model):
     feed_thumbnail_url = models.CharField(
         max_length=300, blank=True, null=True)
     user = models.ForeignKey(User, blank=True, null=True)
+
+    def get_photo_url(self):
+        if self.feed_thumbnail_url:
+            return self.feed_thumbnail_url
+        else:
+            return self.photo_url
     
     def __str__(self):
         return self.photo_url

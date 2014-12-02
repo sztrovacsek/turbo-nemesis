@@ -16,6 +16,16 @@ TMP_ORIG = 'orig_tmp.jpg'
 TMP_NEW = 'thumbnail_feed_tmp.jpg'
 
 
+def aws_bucket_prefix(bucket_name):
+    s = AWS_PREFIX + bucket_name + '/' 
+    return s
+
+
+def url_prefix_magic(bucket_name):
+    l = len(AWS_PREFIX) + len(bucket_name) + 1
+    return l
+
+    
 def connect_aws():
     AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')
     AWS_SECRET_KEY = os.environ.get('AWS_SECRET_KEY')
@@ -26,10 +36,10 @@ def connect_aws():
 
     bucket = conn.get_bucket(S3_BUCKET)
     print("Looked up bucket {0}".format(S3_BUCKET))
-    return (conn, bucket)
+    return (conn, bucket, S3_BUCKET)
 
 
-def create_thumbnail(bucket, prefix_lengh, foodphoto):
+def create_thumbnail(foodphoto, bucket, prefix_lengh, bucket_name):
     # download orig
     k = Key(bucket)
     print("FoodPhoto url: {0}".format(foodphoto.photo_url))
@@ -52,30 +62,32 @@ def create_thumbnail(bucket, prefix_lengh, foodphoto):
         print("IOError", TMP_ORIG)
     # upload
     k2 = Key(bucket)
-    k2.key = 't_feed_{0}'.format(trunkname)
+    thumb_trunkname = 't_feed_{0}'.format(trunkname)
+    print("ThumbTrunk name: {0}".format(thumb_trunkname))
+    k2.key = thumb_trunkname 
     k2.set_contents_from_filename(TMP_NEW)
     # save
+    url = aws_bucket_prefix(bucket_name)+thumb_trunkname
+    print("ThumbUrl name: {0}".format(url))
+    foodphoto.feed_thumbnail_url = url
+    foodphoto.save()
+    # delete temp files
+    os.remove(TMP_ORIG)
+    os.remove(TMP_NEW)
      
 
-
- 
-def url_prefix_magic():
-    S3_BUCKET = os.environ.get('S3_BUCKET')
-    l = len(AWS_PREFIX) + len(S3_BUCKET) + 1
-    return l
-    
-  
 def create_missing_thumbnails():
     print("Starting: creating missing thumbnails")
-    (conn, bucket) = connect_aws();
+    (conn, bucket, bucket_name) = connect_aws();
     posts = Post.objects.all()
-    prefix_length = url_prefix_magic()
+    # warning: this magic only works if all files are in the same bucket
+    prefix_length = url_prefix_magic(bucket_name)
     for post in posts:
         foodphoto = post.foodphoto
         if not foodphoto.feed_thumbnail_url:
             print("Post needs thumbnail: {0}".format(
                 str(post)))
-            create_thumbnail(bucket, prefix_length, foodphoto) 
+            create_thumbnail(foodphoto, bucket, prefix_length, bucket_name) 
 
 
 if __name__ == "__main__":

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Prandius</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Prandius - culinary moments...</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <form class="navbar-form navbar-right" role="form">
+          <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" onlogin="checkLoginState();" scope="public_profile,email,user_friends"></div>
+        </form>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#main_feed">Main feed</a></li>
+          <li><a href="#map_feed">Map feed</a></li>
+          <li><a href="#add_photo">Add photo</a></li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#">Help</a></li>
+        </ul>
+      </div>
+    </div>      
+  </nav>
+
+  <div class="container">
+    <div class="row">
+    </div>
+  </div>
+  <div class="container">
+    <div>
+      <div class="row">
+        <div class="col-md-12">
+        <!-- privacy policy start -->
+<p>
+All the photos you upload are still yours.
+<p>
+All the photos you upload are publicly viewable by everybody.
+<p>
+We use cookies to collect anonymous website usage statistics.
+<p>
+We receive (and may store) your public facebook profile (username, name, email eddress) when you log in with facebook.
+<p>
+We may show your name on our website. We will not show your email on our website, nor will we give it away to any third pary.
+<p>
+We will not give away any of your personal information to any third party.
+<p>
+We will not post on your facebook timeline without your explicit approval for every post.
+<p>
+If you have more questions, contact us at info@prandius.net
+<p>
+        <!-- privacy policy end -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="bower_components/jquery/jquery.js"></script>
+  <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="s3upload.js"></script>
+  <script src="main_feed/view1.js"></script>
+  <script src="add_photo/view2.js"></script>
+  <script src="map_feed/view.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('#id_test').click(function(){
+      loginBackend("uid1234");
+    });
+
+
+  });
+  </script>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57201782-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+
+</body>
+</html>

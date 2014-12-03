@@ -36,22 +36,21 @@
         Add a new photo
       </div>
       <div class="panel-body">
-        <div class="form-group">
+        <div class="form-group" ng-show="!upload_succeeded">
           <p id="status">Please select a file</p>
-          <input class="from-control" type="file" id="files" onchange="angular.element(this).scope().uploadPhoto()" />
+          <input class="from-control" type="file" id="files" onchange="angular.element(this).scope().uploadPhoto()" ng-show="!upload_succeeded"/>
         </div>
         <form role="form" method="POST" action="">
           <div class="form-group">
-            <input class="form-control" type="text" id="description" placeholder="Say something about the photo..."/>
-            <input type="submit" class="btn btn-default" value="Send post" ng-click="savePhoto()"/>
+            <input class="form-control" type="text" id="description" placeholder="Say something about the photo..." ng-disabled="!upload_succeeded"/>
+            <input type="submit" class="btn btn-default" value="Send post" ng-click="savePhoto()" ng-enabled="upload_succeeded" />
           </div>
           <div class="input-group">
-            <input class="form-control" type="hidden" id="photo_url" name="photo_url" value="https://prandius.s3.amazonaws.com/post_placeholder.png" ng-model="photo_url"/>
+            <input class="form-control" type="hidden" id="photo_url" name="photo_url" value="https://prandius.s3.amazonaws.com/post_placeholder.png" ng-model="photo_url" />
           </div>
           <p />
           <div class="form-group">
-            Preview photo
-            <div style="border:1px solid gray;"  id="preview"><img src="https://prandius.s3.amazonaws.com/post_placeholder.png" style="width:470px;" /></div>
+            <div style="border:1px solid gray;"  id="preview"><img src="https://prandius.s3.amazonaws.com/post_placeholder.png" style="width:470px;" ng-show="upload_suceeded" /></div>
           </div>
         </form>
       </div>

@@ -147,6 +147,7 @@ angular.module('prandiusApp.add_photo', ['ngRoute'])
         success: function(json){
           console.log("Post succeeded");
           $scope.post_succeeded = true;
+          $scope.$apply();
         }
       });
     }
@@ -165,7 +166,10 @@ angular.module('prandiusApp.add_photo', ['ngRoute'])
         onFinishS3Put: function(url) {
             status_elem.innerHTML = 'Upload completed. Uploaded to: '+ url;
             url_elem.value = url;
-            preview_elem.innerHTML = '<img src="'+url+'" style="width:300px;" />';
+            console.log("Upload succeeded");
+            $scope.upload_succeeded = true;
+            $scope.$apply();
+            preview_elem.innerHTML = '<img src="'+url+'" style="width:470px;" />';
         },
         onError: function(status) {
             status_elem.innerHTML = 'Upload error: ' + status;

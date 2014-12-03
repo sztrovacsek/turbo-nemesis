@@ -38,7 +38,7 @@
       <div class="panel-body">
         <div class="form-group">
           <p id="status">Please select a file</p>
-          <input class="from-control" type="file" id="files" ng-click="uploadPhoto()"/>
+          <input class="from-control" type="file" id="files" onchange="angular.element(this).scope().uploadPhoto()" />
         </div>
         <form role="form" method="POST" action="">
           <div class="form-group">

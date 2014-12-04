@@ -4,7 +4,7 @@ import time
 from celery import shared_task
 
 from .models import Post, FoodPhoto
-import .services import create_missing_thumbnail
+from .services import create_missing_thumbnail
 
 
 logger = logging.getLogger(__name__)

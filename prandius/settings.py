@@ -87,7 +87,7 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-STATIC_URL = '/'
+STATIC_URL = '/x/'
 STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = ['client/app']
 
@@ -142,5 +142,5 @@ BROKER_URL = os.environ.get(
 CELERY_TASK_SERIALIZER='json'
 CELERY_ACCEPT_CONTENT=['json']
 CELERY_RESULT_SERIALIZER='json'
-CELERY_ALWAYS_EAGER=True
+# CELERY_ALWAYS_EAGER=True
 BROKER_POOL_LIMIT=1

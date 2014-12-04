@@ -4,7 +4,7 @@ import time
 from celery import shared_task
 
 from .models import Post, FoodPhoto
-import services
+import api.services
 
 
 logger = logging.getLogger(__name__)

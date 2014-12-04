@@ -19,7 +19,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 from .models import *
-import tasks
+import api.tasks
 
 
 logger = logging.getLogger(__name__)
@@ -29,6 +29,7 @@ def api_backend_login(request):
     if not request.is_ajax():
         return HttpResponse()
 
+    # TODO: only take this shortcut for admin users
     if request.user.is_authenticated():
         return HttpResponse()
 
@@ -36,6 +37,8 @@ def api_backend_login(request):
     logger.debug("Post data: {0}".format(data));
     fbUid = data["fbUid"]
     fbName = data["name"]
+    # TODO: get the accessToken as well, and verify with the app secret
+    # TODO: convert it into a long term token (use app id and app secret)
     if fbUid:
         user = User.objects.filter(username=fbUid)
         if user:

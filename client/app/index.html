@@ -16,6 +16,7 @@
 
 <div id="fb-root"></div>
 <script>
+    // load the facebook API
     (function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
@@ -24,9 +25,7 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
-    // This function is called when someone finishes with the Login
-    // Button.  See the onlogin handler attached to it in the sample
-    // code below.
+    // This function is called when someone finishes with the Login Button
     function checkLoginState() {
       FB.getLoginStatus(function(response) {
         statusChangeCallback(response);
@@ -69,7 +68,7 @@
       $.ajax({
         url: "/api/backend_login/",
         headers: {'X-CSRFToken': $.cookie('csrftoken')},
-        data: {"fbUid": uid, "fbData": fbData, "name": fbData.name},
+        data: {"fbUid": uid, "fbData": fbData, "name": fbData.name, "accessToken": fbData.authResponse.accessToken},
         type: "POST",
         dataType: "JSON",
         success: function(json){

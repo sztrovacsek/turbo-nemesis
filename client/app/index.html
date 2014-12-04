@@ -58,17 +58,17 @@
       console.log('Welcome!  Fetching your information.... ');
       FB.api('/me', function(response) {
         console.log('Successful login for: ' + response.name);
-        loginBackend(uid, response);
+        loginBackend(uid, accessToken, response);
       });
     }
 
     // login to the prandius backend
-    function loginBackend(uid, fbData){
+    function loginBackend(uid, accessToken, fbData){
       var csrf = $.cookie('csrftoken');
       $.ajax({
         url: "/api/backend_login/",
         headers: {'X-CSRFToken': $.cookie('csrftoken')},
-        data: {"fbUid": uid, "fbData": fbData, "name": fbData.name, "accessToken": fbData.authResponse.accessToken},
+        data: {"fbUid": uid, "fbData": fbData, "name": fbData.name, "accessToken": accessToken},
         type: "POST",
         dataType: "JSON",
         success: function(json){

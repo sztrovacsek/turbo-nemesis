@@ -29,14 +29,18 @@ def api_backend_login(request):
     if not request.is_ajax():
         return HttpResponse()
 
-    # TODO: only take this shortcut for admin users
-    if request.user.is_authenticated():
+    # only take this shortcut for admin users
+    if request.user.is_authenticated() && request.user.is_superuser:
+        logger.debug(
+            "Superuser already logged in: {0}".format(request.user.username))
         return HttpResponse()
 
     data = request.POST
     logger.debug("Post data: {0}".format(data));
     fbUid = data["fbUid"]
     fbName = data["name"]
+    fbAccessToken = data["accessToken"]
+    logger.debug("Logging in with facebook: {0} - {1}".format(fbName, fbUid))
     # TODO: get the accessToken as well, and verify with the app secret
     # TODO: convert it into a long term token (use app id and app secret)
     if fbUid:

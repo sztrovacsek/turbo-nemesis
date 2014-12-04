@@ -30,7 +30,7 @@ def api_backend_login(request):
         return HttpResponse()
 
     # only take this shortcut for admin users
-    if request.user.is_authenticated() && request.user.is_superuser:
+    if request.user.is_authenticated() and request.user.is_superuser:
         logger.debug(
             "Superuser already logged in: {0}".format(request.user.username))
         return HttpResponse()

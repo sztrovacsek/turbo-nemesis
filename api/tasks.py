@@ -4,7 +4,7 @@ import time
 from celery import shared_task
 
 from .models import Post, FoodPhoto
-import api.services
+import .services import create_missing_thumbnail
 
 
 logger = logging.getLogger(__name__)
@@ -15,6 +15,6 @@ def worker_create_thumbnail(post_id):
     logger.debug('Worker: create thumbnail for {0}'.format(post_id))
     post = Post.objects.filter(pk=post_id).first()
     if post:
-        services.create_missing_thumbnail(post)
+        create_missing_thumbnail(post)
     logger.debug('Worker: done')
 

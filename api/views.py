@@ -19,7 +19,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 from .models import *
-from .tasks import *
+import tasks
 
 
 logger = logging.getLogger(__name__)
@@ -139,6 +139,8 @@ def api_photo_add(request):
     description = request.POST.get('description', '')
     post = Post(user=request.user, foodphoto=photo, description=description)
     post.save()
+    # create thumbnail
+    tasks.worker_create_thumbnail.delay(post.pk)
     logger.debug("Post saved: {0}".format(post.description));
 
     reply = {

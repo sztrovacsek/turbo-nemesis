@@ -19,7 +19,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
 from .models import *
-import .tasks import *
+from .tasks import *
 
 
 logger = logging.getLogger(__name__)

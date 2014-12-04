@@ -10,3 +10,4 @@ whitenoise==1.0.4
 boto==2.34.0
 Pillow==2.6.1
 celery==3.1.15
+facepy==1.0.4

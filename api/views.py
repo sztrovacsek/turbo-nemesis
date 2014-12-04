@@ -1,6 +1,8 @@
 import logging
 import json
 import time
+import facepy
+import os
 
 import time, os, base64, hmac, urllib
 from hashlib import sha1
@@ -41,14 +43,30 @@ def api_backend_login(request):
     fbName = data["name"]
     fbAccessToken = data["accessToken"]
     logger.debug("Logging in with facebook: {0} - {1}".format(fbName, fbUid))
-    # TODO: get the accessToken as well, and verify with the app secret
-    # TODO: convert it into a long term token (use app id and app secret)
+
+    fb_app_id = os.environ.get('FB_APP_ID')
+    fb_app_secret_key = os.environ.get('FB_APP_SECRET_KEY')
+    # get the accessToken, and verify with the app secret
+    # convert it into a long term token (use app id and app secret)
+    try:
+        fbLongAccessToken, expires_at = get_extended_access_token(
+            fbAccessToken, fb_app_id, fb_app_secret_key)
+        logger.debug(
+            "facebook access token valid: {0}, long token: {1}"
+            "".format(fbAccessToken, fbLongAccessToken))
+    except facepy.exceptions.OAuthError:
+        logger.debug("facebook access token failed: {0}".format(abAccessToken))
+        reply = {"reply": "ERROR", "user": user.username}
+        return HttpResponse(
+            json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
+            content_type='application/json'
+        )
     if fbUid:
         user = User.objects.filter(username=fbUid)
         if user:
-            logger.debug("Already logged in, wtf? ({0})".format(fbUid));
+            logger.debug("Logging in existing user: {0} - {1}".format(fbName, fbUid))
         elif user is not None:
-            logger.debug("Create and log in user ({0})".format(fbUid));
+            logger.debug("Logging in new user: {0} - {1}".format(fbName, fbUid))
             user = User.objects.create_user(
                 username=fbUid,
                 first_name = fbName,

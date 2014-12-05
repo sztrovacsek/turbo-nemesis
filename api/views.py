@@ -3,8 +3,9 @@ import json
 import time
 import facepy
 import os
+import urllib
 
-import time, os, base64, hmac, urllib
+import base64, hmac
 from hashlib import sha1
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -49,13 +50,13 @@ def api_backend_login(request):
     # get the accessToken, and verify with the app secret
     # convert it into a long term token (use app id and app secret)
     try:
-        fbLongAccessToken, expires_at = get_extended_access_token(
+        fbLongAccessToken, expires_at = facepy.get_extended_access_token(
             fbAccessToken, fb_app_id, fb_app_secret_key)
         logger.debug(
             "facebook access token valid: {0}, long token: {1}"
             "".format(fbAccessToken, fbLongAccessToken))
     except facepy.exceptions.OAuthError:
-        logger.debug("facebook access token failed: {0}".format(abAccessToken))
+        logger.debug("facebook access token failed: {0}".format(fbAccessToken))
         reply = {"reply": "ERROR", "user": user.username}
         return HttpResponse(
             json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),

@@ -40,15 +40,16 @@ def api_backend_login(request):
 
     data = request.POST
     logger.debug("Post data: {0}".format(data));
-    fbUid = data["fbUid"]
-    fbName = data["name"]
-    fbAccessToken = data["accessToken"]
+    fbUid = data['fbUid']
+    fbName = data['name']
+    fbAccessToken = data['accessToken']
     logger.debug("Logging in with facebook: {0} - {1}".format(fbName, fbUid))
 
-    fb_app_id = os.environ.get('FB_APP_ID')
-    fb_app_secret_key = os.environ.get('FB_APP_SECRET_KEY')
+    fb_app_id = os.environ.get('FB_APP_ID', '')
+    fb_app_secret_key = os.environ.get('FB_APP_SECRET_KEY', '')
     # get the accessToken, and verify with the app secret
     # convert it into a long term token (use app id and app secret)
+    import pdb; pdb.set_trace()
     try:
         fbLongAccessToken, expires_at = facepy.get_extended_access_token(
             fbAccessToken, fb_app_id, fb_app_secret_key)

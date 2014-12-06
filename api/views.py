@@ -102,7 +102,6 @@ def api_backend_login(request):
 @login_required
 def api_test(request):
     logger.debug("api_test called")
-    async_task_phase1.delay(1, 2)
     reply = {"reply": "OK",}
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),

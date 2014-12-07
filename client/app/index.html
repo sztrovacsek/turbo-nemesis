@@ -143,10 +143,9 @@
   <script src="map_feed/view.js"></script>
   <script>
   $(document).ready(function(){
-    $('#id_test').click(function(){
-      loginBackend("uid1234");
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
     });
-
 
   });
   </script>

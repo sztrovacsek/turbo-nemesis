@@ -68,12 +68,13 @@
       console.log("Backend login: start");
       $.ajax({
         url: "/api/backend_login/",
-        headers: {'X-CSRFToken': $.cookie('csrftoken')},
+        headers: {
+          'X-CSRFToken': $.cookie('csrftoken'),
+          "cache-control": "no-cache"
+        },
         data: {"fbUid": uid, "fbData": fbData, "name": fbData.name, "accessToken": accessToken},
         type: "POST",
         dataType: "JSON",
-        cache: false,
-        async : !$.browser.safari,
         success: function(json){
           console.log("Backend login: post succeeded");
           // redirect

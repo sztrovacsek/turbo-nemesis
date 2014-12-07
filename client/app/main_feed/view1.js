@@ -14,6 +14,9 @@ angular.module('prandiusApp.main_feed', ['ngRoute'])
     $scope.todo_text = "todo";
     $http.get('/api/latest_posts/').success(function(data) {
       $scope.posts = data["posts"];
+      $.map($scope.posts, function(value){
+          value.create_date = moment(value.create_date).fromNow();
+        });
     });
   }
 ]);

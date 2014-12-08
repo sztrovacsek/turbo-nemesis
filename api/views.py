@@ -73,24 +73,20 @@ def api_backend_login(request):
                 first_name = fbName,
                 password='dummy')
             user.save()
-        # TODO: use our own auth backend
+        # we don't use password based authentication (dummy pw)
         user = authenticate(username=fbUid, password='dummy')
         if user is not None:
             login(request, user)
-            '''
-            # TODO: fix this
-            fbData = data["fbData"]
             fb_user = FacebookUser.objects.create(
                 user_id=user.pk,
-                fb_name = fbData["name"],
-                fb_first_name = fbData["first_name"],
-                fb_last_name = fbData["last_name"],
-                fb_email = fbData["email"],
+                fb_name = data.get('fbData[name]', 'fb_name'),
+                fb_first_name = data.get('fbData[first_name]', 'fb_first_name'),
+                fb_last_name = data.get('fbData[last_name]', 'fb_last_name'),
+                fb_email = data.get('fbData[email]', 'fb_email'),
             )
             fb_user.save()
-            user.email = fb_user.email
-            user.save()
-            '''
+            # user.email = fb_user.fb_email
+            # user.save()
         
     reply = {"reply": "OK", "user": user.username}
     return HttpResponse(

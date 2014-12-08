@@ -77,7 +77,7 @@ def api_backend_login(request):
         user = authenticate(username=fbUid, password='dummy')
         if user is not None:
             login(request, user)
-            fb_user = FacebookUser.objects.create(
+            fb_user = FacebookUser(
                 user_id=user.pk,
                 fb_name = data.get('fbData[name]', 'fb_name'),
                 fb_first_name = data.get('fbData[first_name]', 'fb_first_name'),

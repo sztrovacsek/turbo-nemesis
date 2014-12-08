@@ -210,3 +210,23 @@ def api_user_login_status(request):
     )
 
 
+def api_currentuser_latest_posts(request):
+    reply = {
+        "reply_to": "api_user_latest_posts",
+        "username": request.user.username,
+    }
+    qs = Post.objects.filter(user=request.user.pk).order_by('create_time')
+    reply["posts"] = [{
+        "create_date": str(post.create_time),
+        "description": post.description,
+        "photo_url": post.foodphoto.get_photo_url(),
+        "user_name": post.user.first_name,
+        } for post in qs.reverse()[:10]]
+    reply["reply"] = "OK"
+    return HttpResponse(
+        json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
+        content_type='application/json'
+    )
+
+
+

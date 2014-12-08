@@ -58,3 +58,9 @@ class Api(TestCase):
         )
         self.assertEqual(resp.status_code, 200)
 
+    def test_api_currentuser_latest_posts(self):
+        resp = self.client.get('/api/currentuser/latest_posts/')
+        self.assertEqual(resp.status_code, 200)
+
+
+

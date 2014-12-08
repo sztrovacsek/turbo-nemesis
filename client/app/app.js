@@ -6,6 +6,7 @@ var prandiusApp = angular.module('prandiusApp', [
   'prandiusApp.main_feed',
   'prandiusApp.map_feed',
   'prandiusApp.add_photo',
+  'prandiusApp.post_page',
 ])
 
 .config(['$routeProvider', function($routeProvider) {

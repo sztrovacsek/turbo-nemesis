@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-md-2" ng-include="'side_menu/left.html'">
+  </div>
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <strong>{{ post.user_name }}</strong> - {{ post.description }}
+        <br>{{ post.create_date }}
+      </div>
+      <div class="panel-body">
+        <img ng-src="{{ post.photo_url }}" width="470" alt="posted photo"/>
+      </div>
+    <!-- end: panel -->
+    </div>
+  <!-- end: col-md-8 -->
+  </div>
+
+  <div class="col-md-2" ng-include="'side_menu/story.html'">
+  </div>
+</div>

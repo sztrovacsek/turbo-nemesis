@@ -186,6 +186,7 @@ def api_latest_posts(request):
         "description": post.description,
         "photo_url": post.foodphoto.get_photo_url(),
         "user_name": post.user.first_name,
+        "permalink": post.pk,
         } for post in qs.reverse()[:10]]
     reply["reply"] = "OK"
     return HttpResponse(
@@ -221,8 +222,32 @@ def api_currentuser_latest_posts(request):
         "description": post.description,
         "photo_url": post.foodphoto.get_photo_url(),
         "user_name": post.user.first_name,
+        "permalink": post.pk,
         } for post in qs.reverse()[:10]]
     reply["reply"] = "OK"
+    return HttpResponse(
+        json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
+        content_type='application/json'
+    )
+
+
+def api_post_detail(request, post_pk):
+    reply = {
+        "reply_to": "api_post_detail",
+        "username": request.user.username,
+    }
+    qs = Post.objects.filter(pk=post_pk)
+    if qs:
+        post = qs.first()
+        reply["create_date"] = str(post.create_time)
+        reply["description"] = post.description
+        reply["photo_url"] = post.foodphoto.get_photo_url()
+        reply["user_name"] = post.user.first_name
+        reply["permalink"] = post.pk
+        reply["reply"] = "OK"
+    else:
+        reply["reply"] = "ERROR"
+        reply["message"] = "Post not found"
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
         content_type='application/json'

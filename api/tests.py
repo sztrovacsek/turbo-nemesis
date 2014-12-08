@@ -1,5 +1,6 @@
 import logging
-import unittest.mock as mock
+import time
+import unittest.mock
 from django.test import TestCase, Client
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -13,6 +14,9 @@ class Test1(TestCase):
         x = True
         self.assertTrue(x)
 
+
+def mock_fb_get1(token, appid, appsecret):
+    return ('longtoken', time.time())
 
 class Api(TestCase):
     def setUp(self):
@@ -37,18 +41,20 @@ class Api(TestCase):
         resp = self.client.get('/api/user_login_status/')
         self.assertEqual(resp.status_code, 200)
 
-    @mock.patch('facepy.get_extended_access_token')
-    def _test_api_backend_login(self, mock1):
-        # TODO: make it ajax
-        # TODO: POST data
+    @unittest.mock.patch(
+        'facepy.get_extended_access_token',
+        new=mock_fb_get1)
+    def test_api_backend_login(self):
         data = {}
         data['fbUid'] = '123456789'
         data['name'] = 'Harry Hipster'
         data['accessToken'] = 'sjdihgkjgijesihiogtnvrdruh'
 
-        resp = self.client.post('/api/backend_login/', data)
+        resp = self.client.post(
+            '/api/backend_login/',
+            data=data,
+            #content_type='application/json',
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest',
+        )
         self.assertEqual(resp.status_code, 200)
 
-
-
- 

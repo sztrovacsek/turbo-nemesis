@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="app.css">
   <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
-<body>
+<body ng-app="prandiusApp" ng-controller="IndexCtrl">
 
 <div id="fb-root"></div>
 <script>
@@ -113,10 +113,8 @@
   </nav>
 
   <div class="container">
-    <div class="row">
-    </div>
   </div>
-  <div class="container" ng-app="prandiusApp" ng-controller="IndexCtrl">
+  <div class="container">
     <div ng-view></div>
   </div>
   <div class="footer">

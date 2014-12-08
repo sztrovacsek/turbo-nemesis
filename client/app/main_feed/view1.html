@@ -1,35 +1,6 @@
 <div class="row">
-  <div class="col-md-2">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        My profile
-      </div>
-      <div class="panel-body">
-        Welcome, {{ name }}!
-      </div>
-    <!-- end: panel -->
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Friends
-      </div>
-      <div class="panel-body">
-        Your facebook friends, who are also on Prandius, will show up here.
-      </div>
-    <!-- end: panel -->
-    </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Ads
-      </div>
-      <div class="panel-body">
-        Ads will show up here
-      </div>
-    <!-- end: panel -->
-    </div>
-  <!-- end: col-md-2 -->
+  <div class="col-md-2" ng-include="'side_menu/left.html'">
   </div>
-
   <div class="col-md-8">
     <div class="panel panel-default" ng-repeat="post in posts">
       <div class="panel-heading">
@@ -44,25 +15,6 @@
   <!-- end: col-md-8 -->
   </div>
 
-  <div class="col-md-2">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Story
-      </div>
-      <div class="panel-body">
-        I envisioned this place to be a forum, where <b>foodies</b> can share their passion.
-        <p>
-        We are building a community where food lovers can post a picture of their dinner plate, and see what others eat... around the same time, or somewhere nearby.
-        <p>
-        That's the key: time-wise and location-wise <b>nearby</b>. You can browse the feed, or browse the map. Or (soon enough) do both at the same time!
-        <p>
-        Go out for dinner, and take a pic of your order. Or check out others' recent posts to get a tip for today's dinner location.
-        You can discvover new restaurants this way.
-        <p>
-        Try out your grandma's recipe at home, and <b>share your moment of pride</b> with the world.
-      </div>
-    <!-- end: panel -->
-    </div>
-  <!-- end: col-md-2 -->
+  <div class="col-md-2" ng-include="'side_menu/story.html'">
   </div>
 </div>

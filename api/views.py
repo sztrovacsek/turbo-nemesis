@@ -212,7 +212,7 @@ def api_user_login_status(request):
 
 def api_currentuser_latest_posts(request):
     reply = {
-        "reply_to": "api_user_latest_posts",
+        "reply_to": "api_currentuser_latest_posts",
         "username": request.user.username,
     }
     qs = Post.objects.filter(user=request.user).order_by('create_time')

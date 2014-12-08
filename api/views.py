@@ -215,7 +215,7 @@ def api_currentuser_latest_posts(request):
         "reply_to": "api_user_latest_posts",
         "username": request.user.username,
     }
-    qs = Post.objects.filter(user=request.user.pk).order_by('create_time')
+    qs = Post.objects.filter(user=request.user).order_by('create_time')
     reply["posts"] = [{
         "create_date": str(post.create_time),
         "description": post.description,

@@ -3,8 +3,8 @@
 angular.module('prandiusApp.post_page', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/post_page/:postId', {
-    templateUrl: 'post_page/view.html',
+  $routeProvider.when('/post/:postId', {
+    templateUrl: 'post/view.html',
     controller: 'ViewCtrl'
   });
 }])

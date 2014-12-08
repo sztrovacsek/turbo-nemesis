@@ -8,7 +8,17 @@
         <br>{{ post.create_date }}
       </div>
       <div class="panel-body">
-        <img ng-src="{{post.photo_url}}" width="470" alt="posted photo"/>
+        <div class="modal fade" id="modal{{post.permalink}}" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-body">
+                <img ng-src="{{post.photo_url}}" style="max-width:100%; max-height:100%;" alt="posted photo in full"/>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <img ng-src="{{post.photo_url}}" width="470" alt="posted photo" data-toggle="modal" data-target="#modal{{post.permalink}}"/>
         <!--
         <a href="#/post/{{post.permalink}}">
           <img ng-src="{{post.photo_url}}" width="470" alt="posted photo"/>

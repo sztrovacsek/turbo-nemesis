@@ -195,8 +195,10 @@ def api_latest_posts(request):
         "create_date": str(post.create_time),
         "description": post.description,
         "photo_url": post.foodphoto.get_photo_url(),
+        "photo_url_large": post.foodphoto.photo_url,
         "user_name": post.user.first_name,
-        "permalink": post.pk,
+        "post_id": post.pk,
+        "permalink": "/index.html#/post/{0}".format(post.pk),
         } for post in qs.reverse()[:10]]
     reply["reply"] = "OK"
     return HttpResponse(
@@ -231,8 +233,10 @@ def api_currentuser_latest_posts(request):
         "create_date": str(post.create_time),
         "description": post.description,
         "photo_url": post.foodphoto.get_photo_url(),
+        "photo_url_large": post.foodphoto.photo_url,
         "user_name": post.user.first_name,
-        "permalink": post.pk,
+        "post_id": post.pk,
+        "permalink": "/index.html#/post/{0}".format(post.pk),
         } for post in qs.reverse()[:10]]
     reply["reply"] = "OK"
     return HttpResponse(
@@ -249,12 +253,17 @@ def api_post_detail(request, post_pk):
     qs = Post.objects.filter(pk=post_pk)
     if qs:
         post = qs.first()
-        reply["create_date"] = str(post.create_time)
-        reply["description"] = post.description
-        reply["photo_url"] = post.foodphoto.get_photo_url()
-        reply["user_name"] = post.user.first_name
-        reply["permalink"] = post.pk
-        reply["reply"] = "OK"
+        reply = {
+            "create_date": str(post.create_time),
+            "description": post.description,
+            "photo_url": post.foodphoto.get_photo_url(),
+            "photo_url_large": post.foodphoto.photo_url,
+            "user_name": post.user.first_name,
+            "permalink": post.pk,
+            "reply": "OK",
+            "post_id": post.pk,
+            "permalink": "/index.html#/post/{0}".format(post.pk),
+        }
     else:
         reply["reply"] = "ERROR"
         reply["message"] = "Post not found"

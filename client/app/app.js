@@ -23,6 +23,10 @@ var prandiusApp = angular.module('prandiusApp', [
     $http.get('/api/csrf_token/').success(function(data) {
       console.log("Can login");
     });
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+
   }
 ])
 

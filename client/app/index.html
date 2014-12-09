@@ -67,7 +67,6 @@
         url: "/api/backend_login/",
         headers: {
           'X-CSRFToken': $.cookie('csrftoken'),
-          "cache-control": "no-cache"
         },
         data: {"fbUid": uid, "fbData": fbData, "name": fbData.name, "accessToken": accessToken, 'X-CSRFToken': $.cookie('csrftoken')},
         type: "POST",

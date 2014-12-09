@@ -15,7 +15,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django import forms
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.conf import settings
 
 from django.contrib.auth.models import User
@@ -26,6 +26,16 @@ from .tasks import *
 
 
 logger = logging.getLogger(__name__)
+
+
+@ensure_csrf_cookie
+def api_csrf_token(request):
+    # send csrf token
+    data = {"reply": "OK"}
+    return HttpResponse(
+        json.dumps(data, sort_keys=True, separators=(',',':'), indent=4),
+        content_type='application/json'
+    )
 
 
 def api_backend_login(request):

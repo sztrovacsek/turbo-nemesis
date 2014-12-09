@@ -12,6 +12,7 @@ urlpatterns = patterns('',
     url(r'^login/$', auth_views.login,
         {'template_name': 'admin/login.html'}),
 
+    url(r'^api/csrf_token/$', api_csrf_token),
     url(r'^api/backend_login/$', api_backend_login),
     url(r'^api/test/$', api_test),
     url(r'^api/user_login_status/$', api_user_login_status),

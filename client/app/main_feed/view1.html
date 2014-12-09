@@ -8,7 +8,7 @@
         <br>{{ post.create_date }}
       </div>
       <div class="panel-body">
-        <div class="modal fade" id="modal{{post.pk}}" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal fade" id="modal{{post.post_id}}" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-body">
@@ -18,7 +18,7 @@
           </div>
         </div>
 
-        <img ng-src="{{post.photo_url}}" style="max-width:100%; max-height:100%;" alt="posted photo" data-toggle="modal" data-target="#modal{{post.pk}}"/>
+        <img ng-src="{{post.photo_url}}" style="max-width:100%; max-height:100%;" alt="posted photo" data-toggle="modal" data-target="#modal{{post.post_id}}"/>
         <!--
         <a href="{{post.permalink}}">
           Show

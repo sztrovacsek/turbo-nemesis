@@ -69,7 +69,7 @@
           'X-CSRFToken': $.cookie('csrftoken'),
           "cache-control": "no-cache"
         },
-        data: {"fbUid": uid, "fbData": fbData, "name": fbData.name, "accessToken": accessToken},
+        data: {"fbUid": uid, "fbData": fbData, "name": fbData.name, "accessToken": accessToken, 'X-CSRFToken': $.cookie('csrftoken')},
         type: "POST",
         dataType: "JSON",
         success: function(json){

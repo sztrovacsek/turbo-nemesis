@@ -19,12 +19,15 @@ var prandiusApp = angular.module('prandiusApp', [
     $http.get('/api/user_login_status/').success(function(data) {
       $scope.name = data["name"];
       $scope.logged_in = data["logged_in"];
+      if (!$scope.logged_in){
+        console.log("Checking facebook login status");
+        FB.getLoginStatus(function(response) {
+          statusChangeCallback(response);
+        });
+      }
     });
     $http.get('/api/csrf_token/').success(function(data) {
       console.log("Can login");
-    });
-    FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
     });
 
   }

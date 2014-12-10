@@ -13,72 +13,78 @@
 
 <div id="fb-root"></div>
 <script>
-    // load the facebook API
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=308832312655014&version=v2.0";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '308832312655014',
+      xfbml      : true,
+      version    : 'v2.2'
+    });
+  };
 
-    // This function is called when someone finishes with the Login Button
-    function checkLoginState() {
-      FB.getLoginStatus(function(response) {
-        statusChangeCallback(response);
-      });
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+  // This function is called when someone finishes with the Login Button
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      fbLoginConfirmed(response);
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
     }
+  }
 
-    // This is called with the results from from FB.getLoginStatus().
-    function statusChangeCallback(response) {
-      console.log('statusChangeCallback');
-      console.log(response);
-      // The response object is returned with a status field that lets the
-      // app know the current login status of the person.
-      // Full docs on the response object can be found in the documentation
-      // for FB.getLoginStatus().
-      if (response.status === 'connected') {
-        // Logged into your app and Facebook.
-        fbLoginConfirmed(response);
-      } else if (response.status === 'not_authorized') {
-        // The person is logged into Facebook, but not your app.
-      } else {
-        // The person is not logged into Facebook, so we're not sure if
-        // they are logged into this app or not.
+  // login flow, final step
+  function fbLoginConfirmed(response) {
+    var uid = response.authResponse.userID;
+    var accessToken = response.authResponse.accessToken;
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      loginBackend(uid, accessToken, response);
+    });
+  }
+
+  // login to the prandius backend
+  function loginBackend(uid, accessToken, fbData){
+    var csrf = $.cookie('csrftoken');
+    console.log("Backend login: start");
+    $.ajax({
+      url: "/api/backend_login/",
+      headers: {
+        'X-CSRFToken': $.cookie('csrftoken'),
+      },
+      data: {"fbUid": uid, "fbData": fbData, "name": fbData.name, "accessToken": accessToken, 'X-CSRFToken': $.cookie('csrftoken')},
+      type: "POST",
+      dataType: "JSON",
+      success: function(json){
+        console.log("Backend login: post succeeded");
+        // redirect
+        location.href = "index.html"
       }
-    }
-
-    // login flow, final step
-    function fbLoginConfirmed(response) {
-      var uid = response.authResponse.userID;
-      var accessToken = response.authResponse.accessToken;
-      console.log('Welcome!  Fetching your information.... ');
-      FB.api('/me', function(response) {
-        console.log('Successful login for: ' + response.name);
-        loginBackend(uid, accessToken, response);
-      });
-    }
-
-    // login to the prandius backend
-    function loginBackend(uid, accessToken, fbData){
-      var csrf = $.cookie('csrftoken');
-      console.log("Backend login: start");
-      $.ajax({
-        url: "/api/backend_login/",
-        headers: {
-          'X-CSRFToken': $.cookie('csrftoken'),
-        },
-        data: {"fbUid": uid, "fbData": fbData, "name": fbData.name, "accessToken": accessToken, 'X-CSRFToken': $.cookie('csrftoken')},
-        type: "POST",
-        dataType: "JSON",
-        success: function(json){
-          console.log("Backend login: post succeeded");
-          // redirect
-          location.href = "index.html"
-        }
-      });
-    }
-
+    });
+  }
 
 </script>
 

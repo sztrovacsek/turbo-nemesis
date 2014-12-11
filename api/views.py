@@ -185,13 +185,8 @@ def api_photo_add(request):
     )
 
 
-def api_latest_posts(request):
-    reply = {
-        "reply_to": "api_latest_posts",
-        "username": request.user.username,
-    }
-    qs = Post.objects.all().order_by('create_time')
-    reply["posts"] = [{
+def post_data(post):
+    data = {
         "create_date": str(post.create_time),
         "description": post.description,
         "photo_url": post.foodphoto.get_photo_url(),
@@ -199,7 +194,17 @@ def api_latest_posts(request):
         "user_name": post.user.first_name,
         "post_id": post.pk,
         "permalink": "/index.html#/post/{0}".format(post.pk),
-        } for post in qs.reverse()[:10]]
+        "permalink_fb": "/api/post_detail_fb/{0}".format(post.pk),
+    }
+    return data
+
+def api_latest_posts(request):
+    reply = {
+        "reply_to": "api_latest_posts",
+        "username": request.user.username,
+    }
+    qs = Post.objects.all().order_by('create_time')
+    reply["posts"] = [post_data(post) for post in qs.reverse()[:10]]
     reply["reply"] = "OK"
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
@@ -229,15 +234,7 @@ def api_currentuser_latest_posts(request):
         "username": request.user.username,
     }
     qs = Post.objects.filter(user=request.user).order_by('create_time')
-    reply["posts"] = [{
-        "create_date": str(post.create_time),
-        "description": post.description,
-        "photo_url": post.foodphoto.get_photo_url(),
-        "photo_url_large": post.foodphoto.photo_url,
-        "user_name": post.user.first_name,
-        "post_id": post.pk,
-        "permalink": "/index.html#/post/{0}".format(post.pk),
-        } for post in qs.reverse()[:10]]
+    reply["posts"] = [post_data(post) for post in qs.reverse()[:10]]
     reply["reply"] = "OK"
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
@@ -253,17 +250,7 @@ def api_post_detail(request, post_pk):
     qs = Post.objects.filter(pk=post_pk)
     if qs:
         post = qs.first()
-        reply = {
-            "create_date": str(post.create_time),
-            "description": post.description,
-            "photo_url": post.foodphoto.get_photo_url(),
-            "photo_url_large": post.foodphoto.photo_url,
-            "user_name": post.user.first_name,
-            "permalink": post.pk,
-            "reply": "OK",
-            "post_id": post.pk,
-            "permalink": "/index.html#/post/{0}".format(post.pk),
-        }
+        reply = post_data(post) 
     else:
         reply["reply"] = "ERROR"
         reply["message"] = "Post not found"

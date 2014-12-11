@@ -26,5 +26,10 @@
     <!-- end: panel -->
     </div>
 <script>
-  FB.XFBML.parse();
+  if (typeof FB === "undefined"){
+    console.log("FB undefined (still)");
+  }
+  else{
+    FB.XFBML.parse();
+  }
 </script>

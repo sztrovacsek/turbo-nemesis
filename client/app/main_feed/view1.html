@@ -1,7 +1,7 @@
 <div class="row">
-  <div class="col-md-2 hidden-sm hidden-xs" ng-include="'side_menu/left.html'">
+  <div class="col-lg-2 col-md-2 hidden-sm hidden-xs" ng-include="'side_menu/left.html'">
   </div>
-  <div class="col-lg-8 col-md-8 col-sm-9 hidden-xs">
+  <div class="col-lg-7 col-md-7 col-sm-8 hidden-xs">
     <div class="panel panel-default" ng-repeat="post in posts">
       <div class="panel-heading">
         <strong>{{ post.user_name }}</strong> - {{ post.description }}
@@ -12,24 +12,21 @@
           <div class="modal-dialog modal-lg">
             <div class="modal-content">
               <div class="modal-body">
-                <img ng-src="{{post.photo_url}}" style="max-width:100%; max-height:100%;" alt="posted photo in full"/>
+                <img ng-src="{{post.photo_url_large}}" style="max-width:100%; max-height:100%;" alt="posted photo in full"/>
               </div>
             </div>
           </div>
         </div>
 
         <img ng-src="{{post.photo_url}}" style="max-width:100%; max-height:100%;" alt="posted photo" data-toggle="modal" data-target="#modal{{post.post_id}}"/>
-        <!--
-        <a href="{{post.permalink}}">
-          Show
-        </a>
-        -->
-        <p>
-        <div class="fb-like" data-href="http://www.prandius.net{{post.permalink}}" data-layout="standard" data-action="like" data-show-faces="false" data-share="true"></div>
+        <p/>
+        <div><a class="btn btn-success" href="{{post.permalink}}">Details</a></div>
+        <p/>
+        <div class="fb-like" data-href="http://www.prandius.net{{post.permalink}}" data-layout="standard" data-action="like"
+            data-show-faces="false" data-share="true"></div>
       </div>
-    <!-- end: panel -->
     </div>
-  <!-- end: col-md-8 -->
+  <!-- end: middle div -->
   </div>
   <div class="hidden-lg hidden-md hidden-sm col-xs-12">
     <div class="panel panel-default" ng-repeat="post in posts">
@@ -40,11 +37,10 @@
       <div class="panel-body">
         <img ng-src="{{post.photo_url}}" width="235" alt="posted photo"/>
       </div>
-    <!-- end: panel -->
     </div>
-  <!-- end: col-md-8 -->
+  <!-- end: middle div -->
   </div>
 
-  <div class="col-lg-2 col-md-2 col-sm-3 col-xs-12" ng-include="'side_menu/story.html'">
+  <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-include="'side_menu/story.html'">
   </div>
 </div>

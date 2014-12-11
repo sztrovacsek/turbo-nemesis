@@ -126,8 +126,9 @@ angular.module('prandiusApp.add_photo', ['ngRoute'])
     $scope.upload_succeeded = false;
     $scope.post_succeeded = false;
     $scope.logged_in = false;
+    $scope.s3_status = "Please select a file";
     $http.get('/api/user_login_status/').success(function(data) {
-      $scope.username_i = data["username"];
+      $scope.username = data["username"];
       $scope.name = data["name"];
       $scope.logged_in = data["logged_in"];
     });
@@ -147,6 +148,7 @@ angular.module('prandiusApp.add_photo', ['ngRoute'])
         success: function(json){
           console.log("Post succeeded");
           $scope.post_succeeded = true;
+          // TODO: get the post detail url
           $scope.$apply();
         }
       });
@@ -161,10 +163,10 @@ angular.module('prandiusApp.add_photo', ['ngRoute'])
         file_dom_selector: 'files',
         s3_sign_put_url: '/sign_s3/',
         onProgress: function(percent, message) {
-            status_elem.innerHTML = 'Upload progress: ' + percent + '% ' + message;
+            $scope.s3_status = 'Upload progress: ' + percent + '% ' + message;
         },
         onFinishS3Put: function(url) {
-            status_elem.innerHTML = 'Upload completed. Uploaded to: '+ url;
+            $scope.s3_status = 'Upload completed. Uploaded to: '+ url;
             url_elem.value = url;
             console.log("Upload succeeded");
             $scope.upload_succeeded = true;
@@ -172,7 +174,7 @@ angular.module('prandiusApp.add_photo', ['ngRoute'])
             preview_elem.innerHTML = '<img src="'+url+'" style="width:470px;" />';
         },
         onError: function(status) {
-            status_elem.innerHTML = 'Upload error: ' + status;
+            $scope.s3_status = 'Upload error: ' + status;
         }
       });
 

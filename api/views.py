@@ -17,7 +17,7 @@ from django import forms
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.conf import settings
-
+from django.views.generic import TemplateView
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 
@@ -273,4 +273,26 @@ def api_post_detail(request, post_pk):
     )
 
 
+class PostDetailFb(TemplateView):
+    template_name = 'api/post_detail.html'
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailFb, self).get_context_data(**kwargs)
+        logger.debug(self.kwargs)
+        qs = Post.objects.filter(pk=self.kwargs.get('post_pk', ''))
+        if qs:
+            post = qs.first()
+            reply = {
+                "create_date": str(post.create_time),
+                "description": post.description,
+                "photo_url": post.foodphoto.get_photo_url(),
+                "photo_url_large": post.foodphoto.photo_url,
+                "user_name": post.user.first_name,
+                "permalink": post.pk,
+                "reply": "OK",
+                "post_id": post.pk,
+                "permalink": "/index.html#/post/{0}".format(post.pk),
+            }
+            context['post'] = reply
+        logger.debug(context)
+        return context
 

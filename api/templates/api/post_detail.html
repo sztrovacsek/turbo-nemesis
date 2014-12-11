@@ -1,0 +1,53 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta property="og:url"             content="http://www.prandius.net{{ post.permalink }}" /> 
+  <meta property="og:title"           content="Prandius" /> 
+  <meta property="og:image"           content="{{ post.photo_url_large }}" />
+  <title>Prandius</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{%static "/bower_components/bootstrap/dist/css/bootstrap.css" %}">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div id="fb-root"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-7 col-md-7 col-sm-8 col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>{{ post.user_name }}</strong> - {{ post.description }}
+            <br>{{ post.create_date }}
+          </div>
+          <div class="panel-body">
+            <img src="{{ post.photo_url_large }}" style="max-width:100%; max-height:100%;" alt="posted photo"/>
+            <p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="row text-center">
+      <div class="col-md-4">
+        <a href="/about.html">About us</a>
+      </div>
+      <div class="col-md-4">
+        <a href="/privacy.html">Privacy policy</a>
+      </div>
+      <div class="col-md-4">
+        <a href="/about.html">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="bower_components/jquery/jquery.js"></script>
+  <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+</html>

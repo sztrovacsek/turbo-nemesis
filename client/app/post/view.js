@@ -16,5 +16,11 @@ angular.module('prandiusApp.post_page', ['ngRoute'])
       $scope.post = data;
       $scope.post.create_date = moment($scope.post.create_date).fromNow();
     });
+    if (typeof FB === "undefined"){
+      console.log("FB undefined (still)");
+    }
+    else{
+      FB.XFBML.parse();
+    }
   }
 ]);

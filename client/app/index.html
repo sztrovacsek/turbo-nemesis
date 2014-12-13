@@ -21,6 +21,7 @@
     });
   };
 
+  /*
   (function(d, s, id){
      var js, fjs = d.getElementsByTagName(s)[0];
      if (d.getElementById(id)) {return;}
@@ -28,6 +29,7 @@
      js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
+  */
 
   // This function is called when someone finishes with the Login Button
   function checkLoginState() {
@@ -137,14 +139,15 @@
   <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+  <script src="bower_components/lodash/dist/lodash.js"></script>
   <script src="bower_components/moment/moment.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAgPiMv21OmrvXbLHz6lnWfJLa_M1zqYnw&sensor=false"></script>
   <script src="app.js"></script>
   <script src="main_feed/view1.js"></script>
   <script src="add_photo/view2.js"></script>
   <script src="map_feed/view.js"></script>
-  <script src="post/view.js"></script>
+  <script src="post/view_post.js"></script>
   <script>
   $(document).ready(function(){
     console.log("index: document.ready");

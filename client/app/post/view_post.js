@@ -4,13 +4,14 @@ angular.module('prandiusApp.post_page', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/post/:postId', {
-    templateUrl: 'post/view.html',
+    templateUrl: 'post/view_post.html',
     controller: 'ViewCtrl'
   });
 }])
 
 .controller('ViewCtrl', ['$scope', '$routeParams', '$http',
   function($scope, $routeParams, $http) {
+    console.log("post controller: start");
     $scope.todo_text = "todo";
     $http.get('/api/post_detail/'+$routeParams.postId+'/').success(function(data) {
       $scope.post = data;

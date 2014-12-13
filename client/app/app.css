@@ -6,3 +6,7 @@ body {
   background-repeat: repeat;
 }
 
+.angular-google-map-container {
+    height: 400px;
+}
+

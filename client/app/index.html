@@ -137,11 +137,9 @@
   <script src="bower_components/jquery.cookie/jquery.cookie.js"></script>
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="bower_components/angular-ui-utils/ui-utils.js"></script>
-  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAgPiMv21OmrvXbLHz6lnWfJLa_M1zqYnw&v=3.exp&sensor=false&callback=onGoogleReady"></script>
-  <script src="bower_components/angular-ui-map/ui-map.js"></script>
   <script src="bower_components/moment/moment.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAgPiMv21OmrvXbLHz6lnWfJLa_M1zqYnw&sensor=false"></script>
   <script src="app.js"></script>
   <script src="main_feed/view1.js"></script>
   <script src="add_photo/view2.js"></script>
@@ -151,12 +149,6 @@
   $(document).ready(function(){
     console.log("index: document.ready");
   });
-  </script>
-  <script>
-    function onGoogleReady() {
-      console.log("index: onGoogleReady");
-      angular.bootstrap(document, ['prandiusApp']);
-    }
   </script>
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

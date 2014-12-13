@@ -9,7 +9,7 @@
       <div class="panel-body">
         Soon, here will be a google map, tagged with photos.
         <div style="min-height: 400px;">
-          <div id="map-canvas" ui-map="myMap" ui-options="mapOptions" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"></div>
+          <div id="map-canvas" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0;"></div>
         </div>
       </div>
     </div>
@@ -20,5 +20,47 @@
 <script>
 console.log("map_feed: start");
 
+var map;
+
+function initialize() {
+  var mapOptions = {
+    zoom: 10
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+  // Try HTML5 geolocation
+  if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+      /*
+      var infowindow = new google.maps.InfoWindow({
+        map: map,
+        position: pos,
+        content: 'Location found using HTML5.'
+      });
+      */
+
+      map.setCenter(pos);
+    }, function() {
+      handleNoGeolocation(true);
+    });
+  } else {
+    // Browser doesn't support Geolocation
+    handleNoGeolocation(false);
+  }
+}
+
+function handleNoGeolocation(errorFlag) {
+  if (errorFlag) {
+    console.log('Error: The Geolocation service failed.');
+  } else {
+    console.log('Error: Your browser doesn\'t support geolocation.');
+  }
+  var london = new google.maps.LatLng(51.508742,-0.120850);
+  map.setCenter(london);
+}  
+
+google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 

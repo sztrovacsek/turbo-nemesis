@@ -18,12 +18,14 @@ angular.module('prandiusApp.map_feed', [
 
 .controller('ViewMapCtrl', ['$scope', '$http', 'uiGmapGoogleMapApi',
   function($scope, $http, uiGmapGoogleMapApi) {
-    $scope.todo_text = "todo";
     console.log("map_feed controller: start");
+    $http.get('/api/latest_posts/').success(function(data) {
+      $scope.posts = data["posts"];
+    });
     uiGmapGoogleMapApi.then(function(maps) {
       // temporary map position
       $scope.map = {
-        center: {latitude: 51, longitude: 5},
+        center: {latitude: 51.508742, longitude: -0.120850},
         mapTypeId:google.maps.MapTypeId.ROADMAP,
         zoom: 10
       };

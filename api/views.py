@@ -4,6 +4,7 @@ import time
 import facepy
 import os
 import urllib
+import random
 
 import base64, hmac
 from hashlib import sha1
@@ -191,10 +192,12 @@ def post_data(post):
         "description": post.description,
         "photo_url": post.foodphoto.get_photo_url(),
         "photo_url_large": post.foodphoto.photo_url,
+        "photo_url_map": 'https://s3-eu-west-1.amazonaws.com/prandius/t_map_post_placeholder.png',
         "user_name": post.user.first_name,
         "post_id": post.pk,
         "permalink": "/index.html#/post/{0}".format(post.pk),
         "permalink_fb": "/api/post_detail_fb/{0}".format(post.pk),
+        "chords": {"latitude": 52.08+random.random(), "longitude": 5.10+random.random()},
     }
     return data
 

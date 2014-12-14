@@ -5,6 +5,7 @@ from django.test import TestCase, Client
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from api.models import *
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +24,17 @@ class Api(TestCase):
         self.client = Client(enforce_csrf_checks=False)
         User.objects.create_user('test', 'test@example.com', 'pass')
         self.client.login(username='test', password='pass')
+        fp = FoodPhoto(
+            photo_url='https://prandius.s3.amazonaws.com/t_feed_762954137074363-1418328283.jpg',
+            user=User.objects.first(),
+        )
+        fp.save()
+        p = Post(
+            user=User.objects.first(),
+            foodphoto=fp,
+            description='bla',
+        )
+        p.save()
 
     def test_api_test(self):
         resp = self.client.get('/api/test/')

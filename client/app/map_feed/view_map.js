@@ -21,14 +21,36 @@ angular.module('prandiusApp.map_feed', [
     $scope.todo_text = "todo";
     console.log("map_feed controller: start");
     uiGmapGoogleMapApi.then(function(maps) {
-      console.log("map can now be defined");
-      //promise
+      // temporary map position
       $scope.map = {
-        center: {latitude: 45, longitude: -73},
+        center: {latitude: 51, longitude: 5},
         mapTypeId:google.maps.MapTypeId.ROADMAP,
-        zoom: 8
+        zoom: 10
       };
-      console.log("map defined");
-    });
-  }
+
+      // Try HTML5 geolocation
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = new maps.LatLng(position.coords.latitude, position.coords.longitude);
+          console.log("Pos: "+pos+"("+pos.k+","+pos.B+")");
+          // real map position
+          $scope.map.center = {latitude: pos.k, longitude: pos.B}
+
+        }, function() {
+          handleNoGeolocation(true);
+        });
+      } else {
+        // Browser doesn't support Geolocation
+        handleNoGeolocation(false);
+      }
+
+      function handleNoGeolocation(errorFlag) {
+        if (errorFlag) {
+          console.log('Error: The Geolocation service failed.');
+        } else {
+          console.log('Error: Your browser doesn\'t support geolocation.');
+        }
+      }
+    }); // end: google map promise
+  } // end: controller function
 ]);

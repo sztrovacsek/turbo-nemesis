@@ -29,6 +29,9 @@ from .tasks import *
 logger = logging.getLogger(__name__)
 
 
+DEFAULT_MAP_THUMB = 'https://s3-eu-west-1.amazonaws.com/prandius/t_map_post_placeholder.png'
+
+
 @ensure_csrf_cookie
 def api_csrf_token(request):
     # send csrf token
@@ -192,13 +195,15 @@ def post_data(post):
         "description": post.description,
         "photo_url": post.foodphoto.get_photo_url(),
         "photo_url_large": post.foodphoto.photo_url,
-        "photo_url_map": 'https://s3-eu-west-1.amazonaws.com/prandius/t_map_post_placeholder.png',
+        "photo_url_map": DEFAULT_MAP_THUMB,
         "user_name": post.user.first_name,
         "post_id": post.pk,
         "permalink": "/index.html#/post/{0}".format(post.pk),
         "permalink_fb": "/api/post_detail_fb/{0}".format(post.pk),
         "chords": {"latitude": 52.08+random.random(), "longitude": 5.10+random.random()},
     }
+    if post.foodphoto.map_thumbnail_url:
+      post["photo_url_map"] = post.foodphoto.map_thumbnail_url 
     return data
 
 def api_latest_posts(request):

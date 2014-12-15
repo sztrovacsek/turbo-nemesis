@@ -73,6 +73,41 @@ def create_thumbnail(foodphoto, bucket, bucket_name):
     os.remove(TMP_NEW)
      
 
+def create_map_thumbnail(foodphoto, bucket, bucket_name):
+    # download orig
+    k = Key(bucket)
+    print("FoodPhoto url: {0}".format(foodphoto.photo_url))
+    p = foodphoto.photo_url.rfind('/')
+    trunkname = foodphoto.photo_url[p+1:] 
+    print("Trunk name: {0}".format(trunkname))
+    k.key = trunkname
+    s = k.get_contents_to_filename(TMP_ORIG)
+    # create thumbnail
+    try:
+        im = Image.open(TMP_ORIG)
+        print(im.format, im.size, im.mode)
+        size = 64, 64
+        im.thumbnail(size, Image.ANTIALIAS)
+        im.save(TMP_NEW, 'JPEG')
+    except IOError:
+        print("IOError", TMP_ORIG)
+    # upload
+    k2 = Key(bucket)
+    thumb_trunkname = 't_feed_{0}'.format(trunkname)
+    print("ThumbTrunk name: {0}".format(thumb_trunkname))
+    k2.key = thumb_trunkname
+    k2.set_contents_from_filename(TMP_NEW)
+    k2.set_acl('public-read') 
+    # save
+    url = aws_bucket_prefix(bucket_name)+thumb_trunkname
+    print("ThumbUrl name: {0}".format(url))
+    foodphoto.feed_thumbnail_url = url
+    foodphoto.save()
+    # delete temp files
+    os.remove(TMP_ORIG)
+    os.remove(TMP_NEW)
+     
+
 def create_missing_thumbnail(post):
     (conn, bucket, bucket_name) = connect_aws();
     foodphoto = post.foodphoto

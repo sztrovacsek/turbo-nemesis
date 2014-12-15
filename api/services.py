@@ -93,7 +93,7 @@ def create_map_thumbnail(foodphoto, bucket, bucket_name):
         print("IOError", TMP_ORIG)
     # upload
     k2 = Key(bucket)
-    thumb_trunkname = 't_feed_{0}'.format(trunkname)
+    thumb_trunkname = 't_map_{0}'.format(trunkname)
     print("ThumbTrunk name: {0}".format(thumb_trunkname))
     k2.key = thumb_trunkname
     k2.set_contents_from_filename(TMP_NEW)
@@ -101,7 +101,7 @@ def create_map_thumbnail(foodphoto, bucket, bucket_name):
     # save
     url = aws_bucket_prefix(bucket_name)+thumb_trunkname
     print("ThumbUrl name: {0}".format(url))
-    foodphoto.feed_thumbnail_url = url
+    foodphoto.map_thumbnail_url = url
     foodphoto.save()
     # delete temp files
     os.remove(TMP_ORIG)

@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-lg-2 col-md-2 hidden-sm hidden-xs" ng-include="'side_menu/left.html'">
+  </div>
+  <div class="col-lg-7 col-md-7 col-sm-8 hidden-xs">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Stats
+      </div>
+      <div class="panel-body">
+        You have {{ length(posts) }} posts
+      </div>
+    </div>
+    <div class="panel panel-default" ng-repeat="post in posts">
+      <div class="panel-heading">
+        {{ post.create_date }} - {{ post.description }}
+      </div>
+      <div class="panel-body">
+        <img ng-src="{{post.photo_url}}" style="height: 200px;" alt="posted photo" data-toggle="modal" data-target="#modal{{post.post_id}}"/>
+        <p/>
+        <div>
+          <a class="btn btn-default" href="">Edit</a>
+          <a class="btn btn-default" href="">Delete</a>
+        </div>
+      </div>
+    </div>
+  <!-- end: middle div -->
+  </div>
+  <div class="hidden-lg hidden-md hidden-sm col-xs-12">
+    <div class="panel panel-default" ng-repeat="post in posts">
+      <div class="panel-heading">
+        <strong>{{ post.user_name }}</strong> - {{ post.description }}
+        <br>{{ post.create_date }}
+      </div>
+      <div class="panel-body">
+        <img ng-src="{{post.photo_url}}" width="235" alt="posted photo"/>
+      </div>
+    </div>
+  <!-- end: middle div -->
+  </div>
+
+  <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12" ng-include="'side_menu/story.html'"></div>
+</div>

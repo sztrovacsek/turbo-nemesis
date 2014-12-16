@@ -246,6 +246,7 @@ def api_currentuser_latest_posts(request):
     }
     qs = Post.objects.filter(user=request.user.pk).order_by('create_time')
     reply["posts"] = [post_data(post) for post in qs.reverse()[:20]]
+    reply["count"] = qs.count()
     reply["reply"] = "OK"
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),

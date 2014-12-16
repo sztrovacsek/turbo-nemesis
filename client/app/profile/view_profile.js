@@ -19,12 +19,35 @@ angular.module('prandiusApp.profile_page', ['ngRoute'])
           value.create_date = moment(value.create_date).fromNow();
         });
     });
-    $scope.clickSave = function(post_id){
+    $scope.clickSave = function(post_id, description){
       console.log("Saving... "+post_id);
+      $.ajax({
+        url: "/api/post_edit/",
+        headers: {'X-CSRFToken': $.cookie('csrftoken')},
+        data: {"post_id": post_id, "description": description},
+        type: "POST",
+        dataType: "JSON",
+        success: function(json){
+          console.log("Post succeeded");
+        }
+      });
     }
 
     $scope.clickDelete = function(post_id){
       console.log("Deleting... "+post_id);
+      $.ajax({
+        url: "/api/post_delete/",
+        headers: {'X-CSRFToken': $.cookie('csrftoken')},
+        data: {"post_id": post_id},
+        type: "POST",
+        dataType: "JSON",
+        success: function(json){
+          console.log("Post succeeded");
+          var posts = $scope.posts.filter(function(post){ return (post.post_id != post_id)});
+          $scope.posts = posts;
+          // TODO: call: $scope.$digest(); or something
+        }
+      });
     }
 
     if (typeof FB === "undefined"){

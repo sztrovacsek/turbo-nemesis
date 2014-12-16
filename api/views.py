@@ -189,6 +189,62 @@ def api_photo_add(request):
     )
 
 
+@login_required
+def api_post_delete(request):
+    if not request.is_ajax():
+        return HttpResponse()
+
+    logger.debug("Request (delete post) received: {0}".format(request.POST))
+    post_id = request.POST.get('post_id', '')
+    post = Post.objects.filter(pk=post_id).first()
+    reply = {
+        "reply_to": "api_post_delete",
+        "username": request.user.username,
+    }
+    if post and post.user == request.user:
+        post.delete()
+        logger.debug("Post deleted: {0}".format(post.description))
+        reply["reply"] = "OK"
+    else:
+        logger.debug("Error in post delete: {0}".format(post.description))
+        reply["reply"] = "ERROR"
+
+    return HttpResponse(
+        json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
+        content_type='application/json'
+    )
+
+
+@login_required
+def api_post_edit(request):
+    if not request.is_ajax():
+        return HttpResponse()
+
+    logger.debug("Request (edit post) received: {0}".format(request.POST));
+    post_id = request.POST.get('post_id', '')
+    description = request.POST.get('description', '')
+    location = request.POST.get('location', '')
+    post = Post.objects.filter(pk=post_id).first()
+    reply = {
+        "reply_to": "api_post_edit",
+        "username": request.user.username,
+    }
+    if post and post.user == request.user:
+        post.description = description
+        # TODO: update location
+        post.save()
+        logger.debug("Post edited: {0}".format(post.description))
+        reply["reply"] = "OK"
+    else:
+        logger.debug("Error in post edit: {0}".format(post.description))
+        reply["reply"] = "ERROR"
+
+    return HttpResponse(
+        json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
+        content_type='application/json'
+    )
+
+
 def post_data(post):
     data = {
         "create_date": str(post.create_time),

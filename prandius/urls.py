@@ -18,6 +18,8 @@ urlpatterns = patterns('',
     url(r'^api/user_login_status/$', api_user_login_status),
     url(r'^sign_s3/$', api_sign_s3, name='sign-s3'),
     url(r'^api/photo_add/$', api_photo_add),
+    url(r'^api/post_delete/$', api_post_delete),
+    url(r'^api/post_edit/$', api_post_edit),
     url(r'^api/latest_posts/$', api_latest_posts),
     url(
         r'^api/currentuser/latest_posts/$',

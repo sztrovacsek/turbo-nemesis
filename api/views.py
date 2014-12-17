@@ -256,10 +256,11 @@ def post_data(post):
         "post_id": post.pk,
         "permalink": "/index.html#/post/{0}".format(post.pk),
         "permalink_fb": "/api/post_detail_fb/{0}".format(post.pk),
-        "chords": {
+        "coords": {
             "latitude": 52.08+random.random()-0.5,
             "longitude": 5.10+random.random()-0.5,
         },
+        "address_raw": "Amsterdam",
     }
     if post.foodphoto.map_thumbnail_url:
       data["photo_url_map"] = post.foodphoto.map_thumbnail_url 

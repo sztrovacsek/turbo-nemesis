@@ -233,6 +233,9 @@ def api_post_edit(request):
     }
     if post and post.user == request.user:
         post.description = description
+        post.address_raw = address_raw
+        post.coords_x = coords_x
+        post.coords_y = coords_y
         # TODO: update location
         post.save()
         logger.debug("Post edited: {0}".format(post.description))
@@ -262,10 +265,16 @@ def post_data(post):
             "latitude": 52.08+random.random()-0.5,
             "longitude": 5.10+random.random()-0.5,
         },
-        "address_raw": "Amsterdam",
+        "address_raw": "Paris",
     }
+    if post.address_raw:
+        data["address_raw"] = post.address_raw
+        data["coords"] = {
+            "latitude": post.coords_x,
+            "longitude": post.coords_y,
+        }
     if post.foodphoto.map_thumbnail_url:
-      data["photo_url_map"] = post.foodphoto.map_thumbnail_url 
+        data["photo_url_map"] = post.foodphoto.map_thumbnail_url
     return data
 
 def api_latest_posts(request):

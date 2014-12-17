@@ -38,8 +38,8 @@ class Post(models.Model):
     create_time = models.DateTimeField('created', auto_now_add=True)
     description = models.TextField(blank=True, null=True)
     address_raw = models.TextField(blank=True, null=True)
-    coords_x = models.IntegerField(blank=True, null=True)
-    coords_y = models.IntegerField(blank=True, null=True)
+    coords_x = models.FloatField(blank=True, null=True)
+    coords_y = models.FloatField(blank=True, null=True)
 
     def __str__(self):
         return '{0}_{1}'.format(self.create_time, self.description)

@@ -30,14 +30,14 @@
                   </div>
                    <div class="form-group">
                     <label>Location</label>
-                    <input type="text" class="form-control" ng-model="post.location" placeholder="Location">
+                    <input type="text" class="form-control" ng-model="post.address_raw" placeholder="Location (E.g. London, Amsterdam, Paris)">
                   </div>
                 </form>
 
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="clickSave(post.post_id, post.description)">Save changes</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="clickSave(post)">Save changes</button>
               </div>
             </div>
           </div>

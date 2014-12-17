@@ -1,16 +1,23 @@
 'use strict';
 
-angular.module('prandiusApp.profile_page', ['ngRoute'])
+angular.module('prandiusApp.profile_page', [
+  'ngRoute',
+  'uiGmapgoogle-maps'
+])
 
-.config(['$routeProvider', function($routeProvider) {
+.config(['$routeProvider', 'uiGmapGoogleMapApiProvider', function($routeProvider, uiGmapGoogleMapApiProvider) {
   $routeProvider.when('/profile', {
     templateUrl: 'profile/view_profile.html',
     controller: 'ViewProfileCtrl'
   });
+  uiGmapGoogleMapApiProvider.configure({
+      key: 'AIzaSyAgPiMv21OmrvXbLHz6lnWfJLa_M1zqYnw',
+      v: '3.18'
+  });
 }])
 
-.controller('ViewProfileCtrl', ['$scope', '$routeParams', '$http',
-  function($scope, $routeParams, $http) {
+.controller('ViewProfileCtrl', ['$scope', '$routeParams', '$http', 'uiGmapGoogleMapApi',
+  function($scope, $routeParams, $http, uiGmapGoogleMapApi) {
     console.log("profile_page controller: start");
     $http.get('/api/currentuser/latest_posts/').success(function(data) {
       $scope.posts = data["posts"];
@@ -19,21 +26,37 @@ angular.module('prandiusApp.profile_page', ['ngRoute'])
           value.create_date = moment(value.create_date).fromNow();
         });
     });
-    $scope.clickSave = function(post_id, description){
+    $scope.clickSave = function(post) {
+      var post_id = post.post_id;
+      var description = post.description;
+      var address = post.address_raw;
       console.log("Saving... "+post_id);
-      $.ajax({
-        url: "/api/post_edit/",
-        headers: {'X-CSRFToken': $.cookie('csrftoken')},
-        data: {"post_id": post_id, "description": description},
-        type: "POST",
-        dataType: "JSON",
-        success: function(json){
-          console.log("Post succeeded");
-        }
+      uiGmapGoogleMapApi.then(function(maps) {
+        var geocoder = new maps.Geocoder();
+        geocoder.geocode( { 'address': address}, function(results, status) {
+          var coords;
+          if (status == google.maps.GeocoderStatus.OK) {
+            coords = results[0].geometry.location; // google.maps.LatLng
+            console.log(coords+" ("+coords.lat()+","+coords.lng()+" )");
+          }
+          else {
+            console.log('Geocode was not successful for the following reason: ' + status);
+          }
+          $.ajax({
+            url: "/api/post_edit/",
+            headers: {'X-CSRFToken': $.cookie('csrftoken')},
+            data: {"post_id": post_id, "description": description, "coords_x": coords.lat(), "coords_y": coords.lng(), "address_raw": address},
+            type: "POST",
+            dataType: "JSON",
+            success: function(json){
+              console.log("Post succeeded");
+            }
+          });
+        });
       });
     }
 
-    $scope.clickDelete = function(post_id){
+    $scope.clickDelete = function(post_id) {
       console.log("Deleting... "+post_id);
       $.ajax({
         url: "/api/post_delete/",

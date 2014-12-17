@@ -223,7 +223,9 @@ def api_post_edit(request):
     logger.debug("Request (edit post) received: {0}".format(request.POST));
     post_id = request.POST.get('post_id', '')
     description = request.POST.get('description', '')
-    location = request.POST.get('location', '')
+    address_raw = request.POST.get('address_raw', '')
+    coords_x = request.POST.get('coords_x', '')
+    coords_y = request.POST.get('coords_y', '')
     post = Post.objects.filter(pk=post_id).first()
     reply = {
         "reply_to": "api_post_edit",

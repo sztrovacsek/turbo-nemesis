@@ -235,8 +235,8 @@ def api_post_edit(request):
     if post and post.user == request.user:
         post.description = description
         post.address_raw = address_raw
-        post.coords_x = coords_x
-        post.coords_y = coords_y
+        post.coords_x = float(coords_x)
+        post.coords_y = float(coords_y)
         # TODO: update location
         post.save()
         logger.debug("Post edited: {0}".format(post.description))

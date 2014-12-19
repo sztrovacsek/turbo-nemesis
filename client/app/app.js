@@ -66,7 +66,8 @@ var prandiusApp = angular.module('prandiusApp', [
         dataType: "JSON",
         success: function(json){
           console.log("Backend login: post succeeded");
-          $scope.$apply();
+          // redirect (todo: replace this with scope apply)
+          location.href = "index.html"
         }
       });
     }

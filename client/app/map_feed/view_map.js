@@ -27,7 +27,7 @@ angular.module('prandiusApp.map_feed', [
       $scope.map = {
         center: {latitude: 51.508742, longitude: -0.120850},
         mapTypeId:google.maps.MapTypeId.ROADMAP,
-        zoom: 10
+        zoom: 8
       };
 
       // Try HTML5 geolocation

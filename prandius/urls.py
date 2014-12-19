@@ -14,6 +14,7 @@ urlpatterns = patterns('',
 
     url(r'^api/csrf_token/$', api_csrf_token),
     url(r'^api/backend_login/$', api_backend_login),
+    url(r'^api/backend_logout/$', api_backend_logout),
     url(r'^api/test/$', api_test),
     url(r'^api/user_login_status/$', api_user_login_status),
     url(r'^sign_s3/$', api_sign_s3, name='sign-s3'),

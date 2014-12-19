@@ -20,7 +20,7 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.conf import settings
 from django.views.generic import TemplateView
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 from .models import *
 from .tasks import *
@@ -103,6 +103,22 @@ def api_backend_login(request):
             user.save()
         
     reply = {"reply": "OK", "user": user.username}
+    return HttpResponse(
+        json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
+        content_type='application/json'
+    )
+
+
+def api_backend_logout(request):
+    if not request.is_ajax():
+        return HttpResponse()
+
+    # only take this shortcut for admin users
+    if request.user.is_authenticated():
+        logger.debug("Logging out: {0}".format(request.user.username))
+        logout(request)
+
+    reply = {"reply": "OK", "user": request.user.username}
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
         content_type='application/json'

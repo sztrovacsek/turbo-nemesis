@@ -26,8 +26,8 @@ urlpatterns = patterns('',
         r'^api/currentuser/latest_posts/$',
         api_currentuser_latest_posts
     ),
-    url(r'^api/post_detail/(?P<post_pk>\d+)/$', api_post_detail),
-    url(r'^api/post_detail_fb/(?P<post_pk>\d+)/$', PostDetailFb.as_view()),
+    url(r'^api/post_detail/(?P<post_pk>\d+)$', api_post_detail),
+    url(r'^api/post_detail_fb/(?P<post_pk>\d+)$', PostDetailFb.as_view()),
 
     url(r'^$', RedirectView.as_view(url='/index.html', permanent=False), name='index-view'),
 

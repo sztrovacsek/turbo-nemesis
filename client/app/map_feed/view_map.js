@@ -6,10 +6,15 @@ angular.module('prandiusApp.map_feed', [
 ])
 
 .config(['$routeProvider', 'uiGmapGoogleMapApiProvider', function($routeProvider, uiGmapGoogleMapApiProvider){
-  $routeProvider.when('/map_feed', {
-    templateUrl: 'map_feed/view_map.html',
-    controller: 'ViewMapCtrl'
-  });
+  $routeProvider.
+    when('/map_feed', {
+      templateUrl: 'map_feed/view_map.html',
+      controller: 'ViewMapCtrl'
+    }).
+    when('/map', {
+      templateUrl: 'map_feed/view_map.html',
+      controller: 'ViewMapCtrl'
+    });
   uiGmapGoogleMapApiProvider.configure({
       key: 'AIzaSyAgPiMv21OmrvXbLHz6lnWfJLa_M1zqYnw',
       v: '3.18'

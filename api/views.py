@@ -365,17 +365,7 @@ class PostDetailFb(TemplateView):
         qs = Post.objects.filter(pk=self.kwargs.get('post_pk', ''))
         if qs:
             post = qs.first()
-            reply = {
-                "create_date": str(post.create_time),
-                "description": post.description,
-                "photo_url": post.foodphoto.get_photo_url(),
-                "photo_url_large": post.foodphoto.photo_url,
-                "user_name": post.user.first_name,
-                "permalink": post.pk,
-                "reply": "OK",
-                "post_id": post.pk,
-                "permalink": "/index.html#/post/{0}".format(post.pk),
-            }
+            reply = post_data(post)
             context['post'] = reply
         logger.debug(context)
         return context
@@ -385,10 +375,8 @@ class PostDetailFb(TemplateView):
         post_pk = self.kwargs.get('post_pk', '')
         logger.debug("User agent: {0}".format(uagent))
         if 'facebookexternalhit' not in uagent:
-            logger.debug("Redirecting")
-            HttpResponseRedirect("/index.html#/post/{0}".format(post_pk))
+            return HttpResponseRedirect(
+                "/index.html#/post/{0}".format(post_pk))
         else:
-            logger.debug("No need to redirect")
-        response = super(PostDetailFb, self).get(request)
-        return response
+            return super(PostDetailFb, self).get(request)
 

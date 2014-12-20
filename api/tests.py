@@ -84,7 +84,7 @@ class Api(TestCase):
 
     def test_api_post_detail_fb(self):
         resp = self.client.get('/api/post_detail_fb/1/')
-        self.assertEqual(resp.status_code, 200)
+        self.assertEqual(resp.status_code, 302)
 
 
 class Tools(TestCase):

@@ -380,3 +380,9 @@ class PostDetailFb(TemplateView):
         logger.debug(context)
         return context
 
+    def get(self, request, *args, **kwargs):
+        logger.debug("User agent: {0}".format(
+            request.META.get('HTTP_USER_AGENT', '')))
+        response = super(PostDetailFb, self).get(request)
+        return response
+

@@ -11,7 +11,7 @@ from hashlib import sha1
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from django.contrib import messages
 from django import forms
@@ -381,8 +381,11 @@ class PostDetailFb(TemplateView):
         return context
 
     def get(self, request, *args, **kwargs):
-        logger.debug("User agent: {0}".format(
-            request.META.get('HTTP_USER_AGENT', '')))
+        uagent = request.META.get('HTTP_USER_AGENT', '')
+        post_pk = self.kwargs.get('post_pk', '')
+        logger.debug("User agent: {0}".format(uagent))
+        if 'facebookexternalhit' not in uagent:
+            HttpResponseRedirect("/index.html#/post/{0}".format(post_pk))
         response = super(PostDetailFb, self).get(request)
         return response
 

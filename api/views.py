@@ -385,7 +385,10 @@ class PostDetailFb(TemplateView):
         post_pk = self.kwargs.get('post_pk', '')
         logger.debug("User agent: {0}".format(uagent))
         if 'facebookexternalhit' not in uagent:
+            logger.debug("Redirecting")
             HttpResponseRedirect("/index.html#/post/{0}".format(post_pk))
+        else:
+            logger.debug("No need to redirect")
         response = super(PostDetailFb, self).get(request)
         return response
 

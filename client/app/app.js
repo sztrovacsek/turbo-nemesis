@@ -67,7 +67,7 @@ var prandiusApp = angular.module('prandiusApp', [
         success: function(json){
           console.log("Backend login: post succeeded");
           // redirect (todo: replace this with scope apply)
-          location.href = "index.html"
+          location.href = "index.html";
         }
       });
     }
@@ -92,7 +92,8 @@ var prandiusApp = angular.module('prandiusApp', [
         success: function(json){
           console.log("Logout succeeded");
           $scope.logged_in = false;
-          $scope.$apply();
+          // redirect (todo: replace this with scope apply)
+          location.href = "index.html";
         }
       });
     }

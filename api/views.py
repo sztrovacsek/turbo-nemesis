@@ -198,8 +198,10 @@ def api_photo_add(request):
     reply = {
         "reply_to": "api_photo_add",
         "username": request.user.username,
+        "post": post_data(post),
         "reply": "OK",
     }
+
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),
         content_type='application/json'

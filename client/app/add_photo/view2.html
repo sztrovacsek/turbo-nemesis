@@ -35,9 +35,70 @@
         Your photo has been posted
       </div>
       <div class="panel-body">
-        <div class="input-group">
-          Thank you for posting (soon, you will be able to refine your post on this page)
+        <div class="modal fade" id="modal_edit{{post.post_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <img ng-src="{{post.photo_url_map}}" style="height: 50px;" alt="posted photo small"/>
+                <strong>Edit Post</strong>
+              </div>
+              <div class="modal-body">
+                <form role="form">
+                  <div class="form-group">
+                    <label>Descriprion</label>
+                    <input type="text" class="form-control" ng-model="post.description" placeholder="Description">
+                  </div>
+                   <div class="form-group">
+                    <label>Location</label>
+                    <input type="text" class="form-control" ng-model="post.address_raw" placeholder="Location (E.g. London, Amsterdam, Paris)">
+                  </div>
+                </form>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="clickSave(post)">Save changes</button>
+              </div>
+            </div>
+          </div>
+          <!-- end: modal_edit -->
         </div>
+        <div class="modal fade" id="modal_delete{{post.post_id}}" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <img ng-src="{{post.photo_url_map}}" style="height: 50px;" alt="posted photo small"/>
+                <strong>Delete Post</strong>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete post?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="clickDelete(post.post_id)">Delete</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <!-- end: modal_delete -->
+        </div>
+
+        <img ng-src="{{post.photo_url}}" style="height: 200px;" alt="posted photo"/>
+        <button class="btn" data-toggle="modal" data-target="#modal_edit{{post.post_id}}">
+          <i class="glyphicon glyphicon-pencil"></i> Edit
+        </button> 
+        <button class="btn" data-toggle="modal" data-target="#modal_delete{{post.post_id}}">
+          <i class="glyphicon glyphicon-remove-sign"></i> Delete
+        </button>
+        <!-- fb-->
+        <!-- 
+        <p>
+        <div class="fb-like" data-href="http://www.prandius.net{{post.permalink_fb}}" data-layout="standard" data-action="like"
+            data-show-faces="false" data-share="true"></div>
+        -->
+        <p>
+        <div class="fb-comments" data-href="http://www.prandius.net{{post.permalink_fb}}" data-numposts="5" data-colorscheme="light"></div>
+
+        <!-- end: panel body -->
       </div>
     </div>
     <div class="panel panel-default" ng-show="!logged_in">

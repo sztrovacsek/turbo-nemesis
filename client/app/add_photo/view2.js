@@ -151,6 +151,7 @@ angular.module('prandiusApp.add_photo', ['ngRoute'])
           console.log("Post succeeded");
           $scope.post_succeeded = true;
           // TODO: get the post detail url
+          $scope.post = json["post"];
           $scope.$apply();
         }
       });

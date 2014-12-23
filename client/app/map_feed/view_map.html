@@ -10,7 +10,16 @@
         <div style="height: 500px;">
           <ui-gmap-google-map center='map.center' zoom='map.zoom'>
             <ui-gmap-markers models="posts" idkey="'post_id'" coords="'coords'" icon="'photo_url_map'">
-            </ui-gmap-markers>          
+              <ui-gmap-windows show="false">
+                <div>
+                  <div ng-non-bindable>
+                    <strong>{{user_name}}</strong>
+                    <br>{{description}}
+                    <br><a href="{{permalink}}" target="_blank">Show</a>
+                  </div>
+                </div>
+              </ui-gmap-windows>
+            </ui-gmap-markers>
           </ui-gmap-google-map>
         </div>
       </div>

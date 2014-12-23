@@ -30,3 +30,15 @@ def worker_create_map_thumbnail(post_id):
         create_missing_map_thumbnail(post)
     logger.debug('Worker: done')
 
+
+@shared_task
+def worker_create_thumbnails(post_id):
+    logger.debug('Worker: create thumbnails for {0}'.format(post_id))
+    post = Post.objects.filter(pk=post_id).first()
+    if post:
+        create_missing_thumbnail(post)
+        create_missing_map_thumbnail(post)
+    logger.debug('Worker: done')
+
+
+

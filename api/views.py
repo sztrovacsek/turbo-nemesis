@@ -191,8 +191,7 @@ def api_photo_add(request):
     post = Post(user=request.user, foodphoto=photo, description=description)
     post.save()
     # create thumbnail
-    worker_create_thumbnail.delay(post.pk)
-    worker_create_map_thumbnail.delay(post.pk)
+    worker_create_thumbnails.delay(post.pk)
     logger.debug("Post saved: {0}".format(post.description));
 
     reply = {

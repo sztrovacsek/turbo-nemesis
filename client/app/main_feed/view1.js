@@ -19,11 +19,15 @@ angular.module('prandiusApp.main_feed', ['ngRoute'])
           value.create_date = moment(value.create_date).fromNow();
         });
     });
-    if (typeof FB === "undefined"){
-      console.log("FB undefined (still)");
-    }
-    else{
-      FB.XFBML.parse();
-    }
+    $scope.$evalAsync(
+      function(){
+        if (typeof FB === "undefined"){
+          console.log("FB undefined (still)");
+        }
+        else{
+          FB.XFBML.parse();
+        }
+      }
+    );
   }
 ]);

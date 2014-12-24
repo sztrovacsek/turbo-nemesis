@@ -7,7 +7,7 @@
         <strong>{{ post.user_name }}</strong> - {{ post.description }}
         <br>{{ post.create_date }}
       </div>
-      <div class="panel-body">
+      <div class="panel-body" ng-cloak>
         <div class="modal fade" id="modal{{post.post_id}}" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-lg">
             <div class="modal-content">

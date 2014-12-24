@@ -301,7 +301,7 @@ def api_latest_posts(request):
         "username": request.user.username,
     }
     qs = Post.objects.all().order_by('create_time')
-    reply["posts"] = [post_data(post) for post in qs.reverse()[:10]]
+    reply["posts"] = [post_data(post) for post in qs.reverse()[:30]]
     reply["reply"] = "OK"
     return HttpResponse(
         json.dumps(reply, sort_keys=True, separators=(',',':'), indent=4),

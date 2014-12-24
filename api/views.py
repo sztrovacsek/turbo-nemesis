@@ -268,6 +268,10 @@ def api_post_edit(request):
     )
 
 
+def perturbate(x, d=0.01):
+    return x+random.random()*d-d*0.5
+
+
 def post_data(post):
     data = {
         "create_date": str(post.create_time),
@@ -279,11 +283,6 @@ def post_data(post):
         "post_id": post.pk,
         "permalink": "/index.html#/post/{0}".format(post.pk),
         "permalink_fb": "/api/post_detail_fb/{0}".format(post.pk),
-        "coords": {
-            "latitude": 52.08+random.random()-0.5,
-            "longitude": 5.10+random.random()-0.5,
-        },
-        "address_raw": "Paris",
     }
     if post.address_raw:
         data["address_raw"] = post.address_raw

@@ -33,6 +33,9 @@ class Api(TestCase):
             user=User.objects.first(),
             foodphoto=fp,
             description='bla',
+            address_raw='Utrecht',
+            coords_x=52,
+            coords_y=5,
         )
         p.save()
 

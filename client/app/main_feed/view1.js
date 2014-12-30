@@ -9,8 +9,8 @@ angular.module('prandiusApp.main_feed', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', ['$scope', '$http',
-  function($scope, $http) {
+.controller('View1Ctrl', ['$scope', '$http', '$timeout',
+  function($scope, $http, $timeout) {
     console.log("main_feed controller: start");
     $scope.todo_text = "todo";
     $http.get('/api/latest_posts/').success(function(data) {
@@ -19,15 +19,15 @@ angular.module('prandiusApp.main_feed', ['ngRoute'])
           value.create_date = moment(value.create_date).fromNow();
         });
     });
-    $scope.$evalAsync(
-      function(){
-        if (typeof FB === "undefined"){
-          console.log("FB undefined (still)");
-        }
-        else{
-          FB.XFBML.parse();
-        }
+    $timeout(function(){
+      if (typeof FB === "undefined"){
+        console.log("FB undefined (still)");
       }
-    );
+      else{
+        FB.XFBML.parse();
+      }
+    });
+
+    _.defer(function(){$scope.$apply();});
   }
 ]);

@@ -24,6 +24,7 @@ angular.module('prandiusApp.main_feed', ['ngRoute'])
         console.log("FB undefined (still)");
       }
       else{
+        console.log("running FB parse");
         FB.XFBML.parse();
       }
     });

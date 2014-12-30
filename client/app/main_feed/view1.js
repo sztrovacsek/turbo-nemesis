@@ -20,6 +20,16 @@ angular.module('prandiusApp.main_feed', ['ngRoute'])
         });
     });
     $timeout(function(){
+      console.log("using timeout now");
+    });
+
+    _.defer(function(){$scope.$apply();});
+  }
+])
+.directive('btFbParse', function () {
+  return {
+    restrict:'A',
+    link:function (scope, element, attrs) {
       if (typeof FB === "undefined"){
         console.log("FB undefined (still)");
       }
@@ -27,8 +37,7 @@ angular.module('prandiusApp.main_feed', ['ngRoute'])
         console.log("running FB parse");
         FB.XFBML.parse();
       }
-    });
-
-    _.defer(function(){$scope.$apply();});
-  }
-]);
+    }
+};
+ }
+);

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('prandiusApp.main_feed', ['ngRoute'])
+angular.module('prandiusApp.main_feed', ['ngRoute', 'angulike'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/main_feed', {
@@ -17,23 +17,9 @@ angular.module('prandiusApp.main_feed', ['ngRoute'])
       $scope.posts = data["posts"];
       $.map($scope.posts, function(value){
           value.create_date = moment(value.create_date).fromNow();
+          value.fb_like_url = 'http://www.prandius.net'+value.permalink_fb
         });
     });
   }
 ])
-.directive('btFbParse', function () {
-  return {
-    restrict:'A',
-    link:function (scope, element, attrs) {
-      console.log(scope.post.permalink_fb);
-      if (typeof FB === "undefined"){
-        console.log("FB undefined (still)");
-      }
-      else{
-        console.log("running FB parse");
-        FB.XFBML.parse();
-      }
-    }
-};
- }
-);
+;

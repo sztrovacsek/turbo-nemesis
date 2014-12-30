@@ -9,10 +9,11 @@
     "angular-route": "1.2.x",
     "angular-loader": "1.2.x",
     "angular-mocks": "~1.2.x",
-    "jquery": "1.10.2",
+    "jquery": "2.1.1",
     "bootstrap": "~3.1.1",
     "jquery.cookie": "1.4.1",
     "moment": "~2.8.4",
-    "angular-google-maps": "~2.0.11"
+    "angular-google-maps": "~2.0.11",
+    "angulike": "*"
   }
 }

@@ -19,17 +19,13 @@ angular.module('prandiusApp.main_feed', ['ngRoute'])
           value.create_date = moment(value.create_date).fromNow();
         });
     });
-    $timeout(function(){
-      console.log("using timeout now");
-    });
-
-    _.defer(function(){$scope.$apply();});
   }
 ])
 .directive('btFbParse', function () {
   return {
     restrict:'A',
     link:function (scope, element, attrs) {
+      console.log(scope.post.permalink_fb);
       if (typeof FB === "undefined"){
         console.log("FB undefined (still)");
       }
